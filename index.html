@@ -4,504 +4,527 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROBIN.EDIT | Cinematic Universe</title>
+<title>ROBIN.EDIT | THE EDITVERSE</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+ --bg:#03050b;
+ --panel:#0a101c;
+ --blue:#00b7ff;
+ --cyan:#00e5ff;
+ --white:#f5f8ff;
+ --muted:#8793a8;
+}
+*{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  background:#02050b;
-  color:white;
-  font-family:Arial,sans-serif;
-  overflow-x:hidden;
+ margin:0;background:var(--bg);color:white;
+ font-family:Inter,Arial,sans-serif;
+ overflow-x:hidden;
 }
-:root{
-  --blue:#00aaff;
-  --light:#55ccff;
-  --dark:#02050b;
+button,input{font:inherit}
+button{cursor:pointer}
+body:before{
+ content:"";position:fixed;inset:0;pointer-events:none;
+ background:
+ radial-gradient(ellipse at 15% 15%,#004cff20,transparent 40%),
+ radial-gradient(ellipse at 85% 55%,#00c8ff13,transparent 40%);
+ z-index:-1;
 }
-a{text-decoration:none;color:inherit}
-button{font-family:inherit;cursor:pointer}
-section{padding:85px 7%;scroll-margin-top:75px}
-.navbar{
-  height:75px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 7%;
-  background:rgba(0,5,14,.93);
-  border-bottom:1px solid #087dbb55;
-  position:sticky;
-  top:0;
-  z-index:100;
-  backdrop-filter:blur(15px);
+#particles{
+ position:fixed;inset:0;pointer-events:none;z-index:-1;
+ background-image:
+ radial-gradient(1px 1px at 10% 20%,#fff8 50%,transparent),
+ radial-gradient(2px 2px at 70% 30%,#00cfff88 50%,transparent),
+ radial-gradient(1px 1px at 45% 80%,#fff8 50%,transparent);
+ background-size:180px 180px;
+ animation:stars 15s linear infinite;
 }
-.brand{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:900}
+@keyframes stars{to{background-position:180px 180px}}
+@keyframes glow{
+ 0%,100%{text-shadow:0 0 12px #00b7ff77}
+ 50%{text-shadow:0 0 35px #00b7ff,0 0 65px #007bff}
+}
+@keyframes float{50%{transform:translateY(-9px)}}
+@keyframes pulse{50%{box-shadow:0 0 35px #00b7ff66}}
+@keyframes enter{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+header{
+ height:76px;padding:0 7%;
+ display:flex;align-items:center;justify-content:space-between;
+ border-bottom:1px solid #ffffff12;
+ background:#03050bdc;backdrop-filter:blur(18px);
+ position:sticky;top:0;z-index:20;
+}
 .logo{
-  width:45px;height:45px;border-radius:50%;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#00c8ff,#003b8d);
-  border:2px solid #75dfff;
-  box-shadow:0 0 20px #008cff;
-  font-size:26px;font-weight:900;
+ font-family:Orbitron,sans-serif;font-size:23px;font-weight:900;
+ letter-spacing:2px;color:white;
 }
-.brand span{color:var(--blue)}
-.menu{display:flex;gap:25px;align-items:center}
-.menu a{font-size:12px;font-weight:bold;letter-spacing:1px;color:#ccc}
-.menu a:hover{color:var(--light)}
-.hamburger{display:none;background:none;border:0;color:white;font-size:30px}
+.logo span{color:var(--blue)}
+.nav{display:flex;gap:25px;align-items:center}
+.nav button{
+ background:none;border:0;color:#aab6c9;font-weight:700;
+ font-size:12px;letter-spacing:1px;transition:.3s;
+}
+.nav button:hover{color:var(--cyan)}
+.menu-btn{display:none!important}
 .hero{
-  min-height:760px;
-  padding:75px 7%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
-  background:
-  radial-gradient(ellipse at 50% 45%,#004c8c55,transparent 55%),
-  linear-gradient(180deg,#02050b,#050d19 75%,#02050b);
+ min-height:620px;position:relative;display:flex;align-items:center;
+ padding:70px 9%;overflow:hidden;
+ background:
+ linear-gradient(90deg,#03050b 0%,#03050be8 42%,#03050b44 100%),
+ linear-gradient(0deg,#03050b,transparent 45%),
+ url('https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1800') center/cover;
 }
-.hero:before{
- content:"";
- position:absolute;
- inset:0;
- background:repeating-linear-gradient(115deg,transparent 0 100px,#008cff08 101px 103px);
- pointer-events:none;
+.hero:after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(110deg,transparent 60%,#00b7ff12);
 }
-.hero-logo{
- width:145px;height:145px;
- border-radius:50%;
- display:grid;place-items:center;
- font-size:85px;font-weight:900;
- color:white;
- border:5px solid var(--blue);
- background:radial-gradient(circle,#07548b,#02050b);
- box-shadow:0 0 25px var(--blue),0 0 90px #0077ff66;
- margin-bottom:30px;
- position:relative;
+.hero-content{max-width:680px;position:relative;z-index:2;animation:enter 1s}
+.tag{
+ color:var(--cyan);font-size:11px;font-weight:800;
+ letter-spacing:4px;margin-bottom:22px;
 }
-.hero small{color:var(--light);letter-spacing:6px;font-weight:bold}
-.hero h1{font-size:clamp(48px,10vw,95px);font-weight:1000;margin:15px 0}
-.hero h1 span{color:var(--blue)}
-.hero h2{font-size:clamp(18px,4vw,34px);margin-bottom:20px}
-.hero p{max-width:720px;color:#aaa;font-size:17px;line-height:1.8}
-.buttons{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:35px}
-.btn{
- padding:17px 35px;
- border-radius:50px;
- border:1px solid var(--blue);
- font-weight:bold;
- letter-spacing:2px;
- background:transparent;
- color:white;
- transition:.3s;
+.hero h1{
+ font-family:Orbitron,sans-serif;font-size:clamp(42px,7vw,85px);
+ line-height:1.05;margin:0 0 20px;font-weight:900;
 }
-.btn.primary{background:var(--blue);box-shadow:0 0 25px #008cff66}
-.btn:hover{background:#0077cc;box-shadow:0 0 30px var(--blue);transform:translateY(-3px)}
-.tags{margin-top:65px;color:#657d93;letter-spacing:4px;line-height:3}
-.tags span{margin:0 12px}
-.section-title{text-align:center;margin-bottom:45px}
-.section-title small{color:var(--blue);letter-spacing:5px;font-weight:bold}
-.section-title h2{font-size:clamp(30px,6vw,48px);margin-top:12px}
-.section-title p{color:#888;margin-top:12px}
-.blue{color:var(--blue)}
-.cards{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:22px;
+.hero h1 span{color:var(--blue);animation:glow 3s infinite}
+.hero p{color:#aab6c9;line-height:1.8;max-width:520px;font-size:14px}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.primary,.secondary{
+ padding:15px 25px;border-radius:4px;font-size:11px;
+ font-weight:900;letter-spacing:1.5px;transition:.3s;
 }
-.card{
- background:linear-gradient(145deg,#101d2c,#050a12);
- border:1px solid #17628b66;
- border-radius:17px;
- overflow:hidden;
- transition:.3s;
+.primary{
+ background:var(--blue);color:#00101c;border:1px solid var(--blue);
+ box-shadow:0 0 25px #00b7ff44;
 }
-.card:hover{transform:translateY(-7px);border-color:var(--blue);box-shadow:0 0 25px #008cff22}
-.card-img{
- height:145px;
- display:grid;place-items:center;
- background:radial-gradient(circle,#07538a,#07101d 70%);
- font-size:42px;
+.primary:hover{background:var(--cyan);transform:translateY(-3px)}
+.secondary{background:#ffffff08;color:white;border:1px solid #ffffff44}
+.secondary:hover{border-color:var(--blue);color:var(--cyan)}
+.hero-label{
+ margin-top:65px;color:#65758c;font-size:10px;letter-spacing:3px;
 }
-.card-body{padding:20px}
-.card h3{margin-bottom:10px}
-.card p{color:#999;font-size:13px;line-height:1.7}
-.card button,.card .action{
- display:inline-block;
- margin-top:17px;
- padding:11px 17px;
- border:1px solid var(--blue);
- background:transparent;
- color:white;
- border-radius:25px;
- font-size:11px;
- font-weight:bold;
+.hero-label span{color:var(--blue)}
+.section{padding:75px 7%}
+.section-head{
+ display:flex;align-items:end;justify-content:space-between;
+ gap:20px;margin-bottom:28px;
 }
-.filters{
- display:flex;justify-content:center;gap:10px;
- flex-wrap:wrap;margin-bottom:30px
+.eyebrow{font-size:10px;color:var(--blue);letter-spacing:3px;font-weight:900}
+.section h2{
+ font-family:Orbitron,sans-serif;font-size:clamp(22px,4vw,35px);
+ margin:9px 0 0;
 }
-.filters button{
- padding:10px 17px;border:1px solid #155a83;
- border-radius:30px;background:#071321;color:white
+.section h2 span{color:var(--blue)}
+.description{font-size:12px;color:var(--muted);line-height:1.7}
+.quick-grid{
+ display:grid;grid-template-columns:repeat(2,1fr);gap:20px;
 }
-.filters button.active,.filters button:hover{background:var(--blue)}
-.hidden{display:none!important}
-.player{
- width:100%;max-width:850px;
- margin:35px auto 0;
- padding:15px;background:#071321;
- border:1px solid #087ab7;border-radius:15px;
+.quick-card{
+ min-height:210px;position:relative;overflow:hidden;
+ border:1px solid #ffffff20;border-radius:9px;
+ display:flex;flex-direction:column;justify-content:end;
+ padding:28px;transition:.4s;
+ background-size:cover;background-position:center;
 }
-video{width:100%;max-height:460px;background:black}
-.player p{color:#aaa;font-size:13px;margin-top:10px}
-.collab{
- text-align:center;
- background:radial-gradient(ellipse at center,#07335b,#02050b 70%);
- border-top:1px solid #006ba9;
- border-bottom:1px solid #006ba9;
+.quick-card:before{
+ content:"";position:absolute;inset:0;
+ background:linear-gradient(0deg,#03050b 0%,#03050b88 60%,transparent);
 }
-.requirements{
- max-width:650px;margin:35px auto;
- text-align:left;
- background:#061321;
- border:1px solid #12628d;
- border-radius:15px;
- padding:28px;
+.quick-card>*{position:relative}
+.quick-card:hover{transform:translateY(-6px);border-color:var(--blue);box-shadow:0 10px 40px #007bff20}
+.quick-card h3{font-family:Orbitron;font-size:22px;margin:0 0 8px}
+.quick-card p{font-size:12px;color:#b5c3d5;margin:0 0 16px}
+.quick-card button{
+ width:max-content;background:transparent;border:1px solid var(--blue);
+ color:var(--cyan);padding:10px 18px;font-size:10px;font-weight:900;
+ letter-spacing:1px;
 }
-.requirements li{
- list-style:none;padding:13px 0;
- border-bottom:1px solid #16344c;
- color:#ddd;font-size:14px;
+.movie-bg{background-image:url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1000')}
+.scene-bg{background-image:url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=1000')}
+
+.library{display:none;animation:enter .5s}
+.library.active{display:block}
+.home-view.hidden{display:none}
+.library-top{
+ padding:45px 7% 25px;
+ background:linear-gradient(90deg,#06172b,#03050b);
+ border-bottom:1px solid #ffffff15;
 }
-.requirements li:before{content:"✓";color:var(--blue);font-weight:bold;margin-right:12px}
-.note{color:#9bb3c5;font-size:13px;margin-top:18px}
-.work-card .card-img{height:180px}
-.rating{margin-top:17px;color:var(--light);font-weight:bold;font-size:12px}
-.bar{height:7px;background:#172738;border-radius:10px;margin-top:9px;overflow:hidden}
-.bar span{display:block;height:100%;background:linear-gradient(90deg,#006aff,#50d9ff);border-radius:10px}
+.back{
+ background:none;border:0;color:var(--cyan);
+ font-size:11px;font-weight:900;letter-spacing:1px;margin-bottom:22px;
+}
+.library-top h1{font-family:Orbitron;font-size:clamp(27px,5vw,45px);margin:0}
+.library-top p{color:var(--muted);font-size:12px}
+.search-wrap{
+ margin:22px 0;max-width:700px;position:relative;
+}
+.search-wrap input{
+ width:100%;padding:16px 20px 16px 48px;
+ border:1px solid #ffffff25;border-radius:5px;
+ background:#080f1d;color:white;outline:none;
+}
+.search-wrap input:focus{border-color:var(--blue);box-shadow:0 0 20px #00b7ff22}
+.search-icon{position:absolute;left:17px;top:15px;color:var(--cyan)}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+.filter{
+ background:#0b1423;border:1px solid #ffffff20;
+ color:#9eabc0;padding:9px 15px;border-radius:3px;
+ font-size:10px;font-weight:800;letter-spacing:1px;
+}
+.filter.active,.filter:hover{background:#007dbe22;border-color:var(--blue);color:var(--cyan)}
+.library-content{padding:35px 7% 75px}
+.grid{
+ display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
+ gap:20px;
+}
+.item{
+ overflow:hidden;background:#0a101c;border:1px solid #ffffff12;
+ border-radius:6px;transition:.35s;cursor:pointer;
+ animation:enter .5s;
+}
+.item:hover{transform:translateY(-7px);border-color:var(--blue);box-shadow:0 10px 35px #008cff20}
+.poster{
+ width:100%;aspect-ratio:2/3;object-fit:cover;display:block;
+ background:#101c2b;
+}
+.item-info{padding:13px}
+.item-info h3{font-size:13px;margin:0 0 7px}
+.item-info p{font-size:10px;color:var(--muted);margin:0}
+.item-info .type{color:var(--cyan);margin-top:9px;display:block;font-size:9px;letter-spacing:1px;font-weight:800}
+.item-actions{display:flex;gap:7px;margin-top:12px}
+.small-btn{
+ flex:1;padding:9px 5px;background:#071a2c;
+ border:1px solid #087eb4;color:var(--cyan);
+ font-size:9px;font-weight:900;
+}
+.small-btn:hover{background:var(--blue);color:#00101c}
+.empty{color:var(--muted);padding:50px 0;text-align:center;grid-column:1/-1}
 footer{
- text-align:center;padding:45px 15px;
- background:#01040a;border-top:1px solid #0875aa55;
- color:#778899;font-size:13px;line-height:2
+ border-top:1px solid #ffffff15;padding:35px 7%;
+ text-align:center;background:#03050b;
 }
-.socials{margin:18px;display:flex;gap:20px;justify-content:center;color:var(--light)}
-@media(max-width:700px){
- .navbar{padding:0 5%}
- .hamburger{display:block}
- .menu{
-  display:none;position:absolute;top:74px;left:0;width:100%;
-  background:#050d18;padding:25px;
-  flex-direction:column;border-bottom:1px solid var(--blue)
- }
- .menu.open{display:flex}
- section{padding:65px 5%}
- .hero{min-height:730px;padding:65px 5%}
- .hero p{font-size:15px}
- .hero-logo{width:125px;height:125px;font-size:72px}
+footer .logo{font-size:20px}
+footer p{color:#718097;font-size:11px;line-height:1.8}
+footer a{color:var(--cyan);text-decoration:none}
+.modal{
+ position:fixed;inset:0;z-index:100;background:#000d;
+ display:none;align-items:center;justify-content:center;padding:18px;
+ backdrop-filter:blur(12px);
+}
+.modal.show{display:flex}
+.modal-box{
+ width:100%;max-width:800px;max-height:90vh;overflow:auto;
+ background:#09111e;border:1px solid #168cc5;border-radius:8px;
+ box-shadow:0 0 60px #007bff25;position:relative;
+}
+.close{
+ position:absolute;right:14px;top:12px;z-index:3;
+ border:0;background:#09111e;color:white;font-size:25px;
+}
+.modal-content{padding:30px}
+.modal-content h2{font-family:Orbitron;margin:0 0 12px}
+.modal-content p{color:#9baabd;font-size:13px;line-height:1.8}
+.modal-content input{
+ width:100%;padding:13px;background:#030914;color:white;
+ border:1px solid #ffffff30;margin:8px 0;outline:none;
+}
+.modal-content button{margin-top:10px}
+.video{
+ width:100%;aspect-ratio:16/9;background:#000;display:block;
+}
+.video video{width:100%;height:100%;object-fit:contain}
+.notice{color:#ffca6b!important;font-size:11px!important}
+@media(max-width:900px){
+ .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .hero{min-height:550px}
+}
+@media(max-width:600px){
+ header{height:65px;padding:0 5%}
+ .nav{gap:12px}
+ .nav button{font-size:9px}
+ .hero{min-height:540px;padding:55px 6%}
+ .section{padding:55px 5%}
+ .quick-grid{grid-template-columns:1fr}
+ .quick-card{min-height:180px}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .library-content{padding:25px 5% 55px}
+ .library-top{padding:30px 5%}
+ .item-info{padding:10px}
+ .item-info h3{font-size:11px}
+ .item-actions{flex-direction:column}
+ .hero-label{margin-top:45px}
 }
 </style>
 </head>
 
 <body>
+<div id="particles"></div>
 
-<!-- NAVIGATION -->
-<header class="navbar">
- <a href="#home" class="brand">
-  <div class="logo">R</div>
-  ROBIN<span>.EDIT</span>
- </a>
- <button class="hamburger" onclick="toggleMenu()">☰</button>
- <nav class="menu" id="menu">
-  <a href="#home">HOME</a>
-  <a href="#work">MY WORK</a>
-  <a href="#packs">SCENE PACKS</a>
-  <a href="#movies">FREE MOVIES</a>
-  <a href="#collab">COLLAB</a>
+<header>
+ <div class="logo">ROBIN<span>.</span>EDIT</div>
+ <nav class="nav">
+  <button onclick="goHome()">HOME</button>
+  <button onclick="openLibrary('movies')">MOVIES</button>
+  <button onclick="openLibrary('scenes')">SCENE PACKS</button>
+  <button onclick="collab()">COLLAB</button>
  </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero" id="home">
- <div class="hero-logo">R</div>
- <small>@ ROBIN.EDIT • VIDEO EDITOR</small>
- <h1>ROBIN<span>.</span>EDIT</h1>
- <h2>A CINEMATIC VIDEO EDITOR</h2>
- <p>
- 🎬 Cinema • Edits • Stories — Creating emotions through
- cinematic transitions, powerful scenes and unforgettable edits.
- Marvel, Anime, Indian Cinema and more.
- </p>
- <div class="buttons">
-  <a class="btn" href="#work">EXPLORE MY WORK</a>
-  <a class="btn primary" href="#collab">COLLAB WITH ME</a>
+<!-- HOME -->
+<main id="home" class="home-view">
+ <section class="hero">
+  <div class="hero-content">
+   <div class="tag">WELCOME TO THE EDITVERSE</div>
+   <h1>ENTER THE<br><span>WORLD</span> OF<br>CINEMA.</h1>
+   <p>
+    Discover cinematic worlds, explore your favourite movies,
+    collect epic scene packs and create something legendary.
+    This is your universe. This is ROBIN.EDIT.
+   </p>
+   <div class="hero-buttons">
+    <button class="primary" onclick="openLibrary('movies')">EXPLORE MOVIES ↗</button>
+    <button class="secondary" onclick="openLibrary('scenes')">SCENE PACKS</button>
+   </div>
+   <div class="hero-label">ONE UNIVERSE. <span>INFINITE STORIES.</span></div>
+  </div>
+ </section>
+
+ <section class="section">
+  <div class="section-head">
+   <div>
+    <div class="eyebrow">EXPLORE THE UNIVERSE</div>
+    <h2>YOUR <span>DESTINATION</span></h2>
+   </div>
+   <div class="description">Choose your world.</div>
+  </div>
+
+  <div class="quick-grid">
+   <div class="quick-card movie-bg">
+    <h3>MOVIE LIBRARY</h3>
+    <p>Discover movies, explore posters and search your favourites.</p>
+    <button onclick="openLibrary('movies')">OPEN MOVIES ↗</button>
+   </div>
+   <div class="quick-card scene-bg">
+    <h3>SCENE PACKS</h3>
+    <p>Explore cinematic edits, anime, superhero and series scenes.</p>
+    <button onclick="openLibrary('scenes')">OPEN SCENE PACKS ↗</button>
+   </div>
+  </div>
+ </section>
+</main>
+
+<!-- MOVIE LIBRARY -->
+<section id="movies" class="library">
+ <div class="library-top">
+  <button class="back" onclick="goHome()">← BACK TO HOME</button>
+  <div class="eyebrow">THE CINEMA COLLECTION</div>
+  <h1>MOVIE <span style="color:#00b7ff">LIBRARY</span></h1>
+  <p>Explore your favourite cinematic worlds.</p>
+  <div class="search-wrap">
+   <span class="search-icon">⌕</span>
+   <input id="movieSearch" placeholder="Search movies, genres, titles..." oninput="renderMovies()">
+  </div>
+  <div class="filters" id="movieFilters">
+   <button class="filter active" onclick="setFilter('movies','All',this)">ALL</button>
+   <button class="filter" onclick="setFilter('movies','Action',this)">ACTION</button>
+   <button class="filter" onclick="setFilter('movies','Sci-Fi',this)">SCI-FI</button>
+   <button class="filter" onclick="setFilter('movies','Adventure',this)">ADVENTURE</button>
+   <button class="filter" onclick="setFilter('movies','Animation',this)">ANIMATION</button>
+  </div>
  </div>
- <div class="tags">
-  <span>MARVEL</span> • <span>DC</span> •
-  <span>ANIME</span> • <span>INDIAN CINEMA</span>
+ <div class="library-content">
+  <div class="section-head">
+   <div><div class="eyebrow">HANDPICKED COLLECTION</div><h2>ALL <span>MOVIES</span></h2></div>
+   <div class="description" id="movieCount"></div>
+  </div>
+  <div class="grid" id="movieGrid"></div>
  </div>
 </section>
 
-<!-- WORK -->
-<section id="work">
- <div class="section-title">
-  <small>MY CREATIONS</small>
-  <h2>VIEW MY <span class="blue">WORK</span></h2>
-  <p>My editing portfolio and creative skills.</p>
- </div>
-
- <div class="cards">
-  <div class="card work-card">
-   <div class="card-img">🎬</div>
-   <div class="card-body">
-    <h3>Marvel Edits</h3>
-    <p>Action, cinematic effects and transitions.</p>
-    <div class="rating">Creator quality rating: 95%</div>
-    <div class="bar"><span style="width:95%"></span></div>
-   </div>
+<!-- SCENE PACK LIBRARY -->
+<section id="scenes" class="library">
+ <div class="library-top">
+  <button class="back" onclick="goHome()">← BACK TO HOME</button>
+  <div class="eyebrow">THE CREATOR'S ARCHIVE</div>
+  <h1>SCENE <span style="color:#00b7ff">PACKS</span></h1>
+  <p>Find your next cinematic edit inspiration.</p>
+  <div class="search-wrap">
+   <span class="search-icon">⌕</span>
+   <input id="sceneSearch" placeholder="Search scene packs, characters..." oninput="renderScenes()">
   </div>
-
-  <div class="card work-card">
-   <div class="card-img">⚡</div>
-   <div class="card-body">
-    <h3>Anime Edits</h3>
-    <p>Anime battles, velocity and powerful effects.</p>
-    <div class="rating">Creator quality rating: 92%</div>
-    <div class="bar"><span style="width:92%"></span></div>
-   </div>
-  </div>
-
-  <div class="card work-card">
-   <div class="card-img">❤️</div>
-   <div class="card-body">
-    <h3>Romantic Edits</h3>
-    <p>Emotional storytelling and smooth transitions.</p>
-    <div class="rating">Creator quality rating: 90%</div>
-    <div class="bar"><span style="width:90%"></span></div>
-   </div>
-  </div>
-
-  <div class="card work-card">
-   <div class="card-img">🔥</div>
-   <div class="card-body">
-    <h3>Indian Cinema</h3>
-    <p>Powerful scenes and cinematic storytelling.</p>
-    <div class="rating">Creator quality rating: 94%</div>
-    <div class="bar"><span style="width:94%"></span></div>
-   </div>
+  <div class="filters" id="sceneFilters">
+   <button class="filter active" onclick="setFilter('scenes','All',this)">ALL</button>
+   <button class="filter" onclick="setFilter('scenes','Marvel',this)">MARVEL</button>
+   <button class="filter" onclick="setFilter('scenes','DC',this)">DC</button>
+   <button class="filter" onclick="setFilter('scenes','Anime',this)">ANIME</button>
+   <button class="filter" onclick="setFilter('scenes','Series',this)">SERIES</button>
+   <button class="filter" onclick="setFilter('scenes','Movies',this)">MOVIES</button>
   </div>
  </div>
- <p class="note" style="text-align:center">
-  Sample self-assessed percentages — replace these with your actual ratings.
- </p>
-</section>
-
-<!-- SCENE PACKS -->
-<section id="packs" style="background:#050b14">
- <div class="section-title">
-  <small>DOWNLOAD LIBRARY</small>
-  <h2>4K <span class="blue">SCENE PACKS</span></h2>
-  <p>Explore cinematic scenes and editing resources.</p>
- </div>
-
- <div class="filters" id="packFilters">
-  <button class="active" onclick="filterPacks('all',this)">ALL</button>
-  <button onclick="filterPacks('marvel',this)">MARVEL</button>
-  <button onclick="filterPacks('dc',this)">DC</button>
-  <button onclick="filterPacks('series',this)">SERIES</button>
-  <button onclick="filterPacks('anime',this)">ANIME</button>
-  <button onclick="filterPacks('indian',this)">INDIAN CINEMA</button>
- </div>
-
- <div class="cards" id="packGrid">
-  <div class="card pack" data-category="marvel">
-   <div class="card-img">🦸</div>
-   <div class="card-body">
-    <h3>Marvel Scene Packs</h3>
-    <p>Licensed Marvel editing resources and scene collections.</p>
-    <a class="action" href="packs/marvel.zip">DOWNLOAD PACK</a>
-   </div>
+ <div class="library-content">
+  <div class="section-head">
+   <div><div class="eyebrow">THE EDITOR'S COLLECTION</div><h2>SCENE <span>ARCHIVE</span></h2></div>
+   <div class="description" id="sceneCount"></div>
   </div>
-
-  <div class="card pack" data-category="dc">
-   <div class="card-img">🦇</div>
-   <div class="card-body">
-    <h3>DC Scene Packs</h3>
-    <p>Authorized DC cinematic editing resources.</p>
-    <a class="action" href="packs/dc.zip">DOWNLOAD PACK</a>
-   </div>
-  </div>
-
-  <div class="card pack" data-category="series">
-   <div class="card-img">📺</div>
-   <div class="card-body">
-    <h3>Stranger Things</h3>
-    <p>Authorized series editing resources.</p>
-    <a class="action" href="packs/stranger-things.zip">DOWNLOAD PACK</a>
-   </div>
-  </div>
-
-  <div class="card pack" data-category="anime">
-   <div class="card-img">⚔️</div>
-   <div class="card-body">
-    <h3>Anime Scene Packs</h3>
-    <p>Anime editing resources and original effects.</p>
-    <a class="action" href="packs/anime.zip">DOWNLOAD PACK</a>
-   </div>
-  </div>
-
-  <div class="card pack" data-category="indian">
-   <div class="card-img">🎥</div>
-   <div class="card-body">
-    <h3>Indian Cinema</h3>
-    <p>Authorized Indian cinema editing resources.</p>
-    <a class="action" href="packs/indian.zip">DOWNLOAD PACK</a>
-   </div>
-  </div>
- </div>
- <p class="note" style="text-align:center">
-  Add your own or licensed 4K ZIP files to the packs folder.
- </p>
-</section>
-
-<!-- MOVIES -->
-<section id="movies">
- <div class="section-title">
-  <small>ENTERTAINMENT ZONE</small>
-  <h2>FREE <span class="blue">MOVIES</span></h2>
-  <p>Hindi Dubbed • Full HD • Watch on this website</p>
- </div>
-
- <div class="filters">
-  <button class="active">ALL MOVIES</button>
-  <button>HINDI DUBBED</button>
-  <button>HD</button>
- </div>
-
- <div class="cards">
-  <div class="card">
-   <div class="card-img">🎬</div>
-   <div class="card-body">
-    <h3>Movie 01</h3>
-    <p>Hindi Dubbed • Full HD</p>
-    <button onclick="playMovie('media/movies/movie01.mp4','Movie 01')">
-     WATCH NOW
-    </button>
-   </div>
-  </div>
-
-  <div class="card">
-   <div class="card-img">🍿</div>
-   <div class="card-body">
-    <h3>Movie 02</h3>
-    <p>Hindi Dubbed • Full HD</p>
-    <button onclick="playMovie('media/movies/movie02.mp4','Movie 02')">
-     WATCH NOW
-    </button>
-   </div>
-  </div>
-
-  <div class="card">
-   <div class="card-img">🎞️</div>
-   <div class="card-body">
-    <h3>Movie 03</h3>
-    <p>Hindi Dubbed • Full HD</p>
-    <button onclick="playMovie('media/movies/movie03.mp4','Movie 03')">
-     WATCH NOW
-    </button>
-   </div>
-  </div>
- </div>
-
- <div class="player" id="moviePlayer" style="display:none">
-  <h3 id="movieTitle">Now Playing</h3>
-  <video id="video" controls playsinline></video>
-  <p>Only authorized or public-domain movies should be hosted here.</p>
+  <div class="grid" id="sceneGrid"></div>
  </div>
 </section>
 
-<!-- COLLAB -->
-<section class="collab" id="collab">
- <div class="section-title">
-  <small>WORK WITH ROBIN</small>
-  <h2>LET'S <span class="blue">COLLAB</span></h2>
-  <p>Want to become a part of the ROBIN.EDIT community?</p>
- </div>
-
- <div class="requirements">
-  <h3 style="color:#55ccff;margin-bottom:15px">COLLAB REQUIREMENTS</h3>
-  <ul>
-   <li>You must follow my social media profile.</li>
-   <li>You must have more than 1,000 followers.</li>
-   <li>Your videos must be properly edited and presented.</li>
-   <li>Your content must be original, not copied.</li>
-   <li>Your videos must be in HD quality.</li>
-  </ul>
-  <p class="note">
-   Views are not required. Quality and originality matter most.
-  </p>
- </div>
-
- <a class="btn primary" id="dmButton"
- href="https://ig.me/m/YOUR_INSTAGRAM_USERNAME"
- target="_blank">
- REQUEST A COLLAB →
- </a>
- <p class="note">Click above to message ROBIN directly on Instagram.</p>
-</section>
-
-<!-- FOOTER -->
 <footer>
- <div class="brand" style="justify-content:center">
-  <div class="logo">R</div> ROBIN<span style="color:#00aaff">.EDIT</span>
- </div>
- <p>Creating emotions, one edit at a time.</p>
- <div class="socials">
-  <a href="https://instagram.com/YOUR_INSTAGRAM_USERNAME">INSTAGRAM</a>
-  <a href="#work">MY WORK</a>
-  <a href="#collab">COLLAB</a>
- </div>
- <p>© 2026 ROBIN.EDIT • All Rights Reserved</p>
+ <div class="logo">ROBIN<span style="color:#00b7ff">.</span>EDIT</div>
+ <p>THE EDITVERSE · MADE FOR CREATORS</p>
+ <p>Collaboration & enquiries</p>
+ <a href="https://instagram.com/robinsolace" target="_blank">@robinsolace ↗</a>
+ <p>© 2026 ROBIN.EDIT. All rights reserved.</p>
 </footer>
 
+<!-- DETAILS MODAL -->
+<div class="modal" id="detailModal" onclick="if(event.target===this)closeModal()">
+ <div class="modal-box">
+  <button class="close" onclick="closeModal()">×</button>
+  <div id="modalBody"></div>
+ </div>
+</div>
+
 <script>
-function toggleMenu(){
- document.getElementById("menu").classList.toggle("open");
-}
-document.querySelectorAll(".menu a").forEach(link=>{
- link.addEventListener("click",()=>{
-  document.getElementById("menu").classList.remove("open");
- });
-});
+const movies = [
+ {title:"Avengers: Endgame",genre:"Action",year:"2019",image:"https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",desc:"The Avengers face their greatest challenge.",video:""},
+ {title:"Spider-Man: No Way Home",genre:"Action",year:"2021",image:"https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",desc:"A multiverse adventure.",video:""},
+ {title:"Interstellar",genre:"Sci-Fi",year:"2014",image:"https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",desc:"A journey beyond the stars.",video:""},
+ {title:"Inception",genre:"Sci-Fi",year:"2010",image:"https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",desc:"Dreams within dreams.",video:""},
+ {title:"The Dark Knight",genre:"Action",year:"2008",image:"https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",desc:"Gotham's legendary battle.",video:""},
+ {title:"Dune: Part Two",genre:"Adventure",year:"2024",image:"https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",desc:"The epic journey continues.",video:""},
+ {title:"Avatar",genre:"Adventure",year:"2009",image:"https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg",desc:"Discover Pandora.",video:""},
+ {title:"The Batman",genre:"Action",year:"2022",image:"https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg",desc:"A dark new chapter in Gotham.",video:""},
+ {title:"Spider-Man: Across the Spider-Verse",genre:"Animation",year:"2023",image:"https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",desc:"Miles explores the Spider-Verse.",video:""},
+ {title:"Guardians of the Galaxy",genre:"Adventure",year:"2014",image:"https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg",desc:"The galaxy's unlikely heroes.",video:""}
+];
 
-function filterPacks(category,button){
- document.querySelectorAll("#packFilters button").forEach(b=>b.classList.remove("active"));
+const scenes = [
+ {title:"Marvel Cinematic Universe",genre:"Marvel",year:"SCENE PACK",image:"https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",desc:"Marvel superhero cinematic scenes.",video:""},
+ {title:"Iron Man Archive",genre:"Marvel",year:"SCENE PACK",image:"https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg",desc:"Iron Man edit collection.",video:""},
+ {title:"Spider-Man Collection",genre:"Marvel",year:"SCENE PACK",image:"https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",desc:"Spider-Man cinematic moments.",video:""},
+ {title:"Batman Dark Archive",genre:"DC",year:"SCENE PACK",image:"https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg",desc:"Gotham's dark cinematic collection.",video:""},
+ {title:"Joker Cinematic Pack",genre:"DC",year:"SCENE PACK",image:"https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",desc:"Joker cinematic scenes.",video:""},
+ {title:"One Piece Archive",genre:"Anime",year:"SCENE PACK",image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600",desc:"Anime scenes and character moments.",video:""},
+ {title:"Attack on Titan",genre:"Anime",year:"SCENE PACK",image:"https://images.unsplash.com/photo-1614583225154-5fcdda07019e?w=600",desc:"Epic anime battle scenes.",video:""},
+ {title:"Stranger Things",genre:"Series",year:"SCENE PACK",image:"https://image.tmdb.org/t/p/w500/x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg",desc:"The supernatural world of Hawkins.",video:""},
+ {title:"Peaky Blinders",genre:"Series",year:"SCENE PACK",image:"https://image.tmdb.org/t/p/w500/vUUqzWa2LnHIVqkaKVlVGkVcZIW.jpg",desc:"Thomas Shelby cinematic scenes.",video:""},
+ {title:"Cinema Archive",genre:"Movies",year:"SCENE PACK",image:"https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600",desc:"A collection of cinematic movie moments.",video:""}
+];
+
+let movieFilter="All",sceneFilter="All";
+
+function card(item,type){
+ return `
+ <article class="item">
+  <img class="poster" src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500'">
+  <div class="item-info">
+   <h3>${item.title}</h3>
+   <p>${item.genre} · ${item.year}</p>
+   <span class="type">${type==="movies"?"MOVIE":"SCENE COLLECTION"}</span>
+   <div class="item-actions">
+    <button class="small-btn" onclick="details('${type}',${type==="movies"?movies.indexOf(item):scenes.indexOf(item)})">DETAILS</button>
+    <button class="small-btn" onclick="playItem('${type}',${type==="movies"?movies.indexOf(item):scenes.indexOf(item)})">PLAY ▶</button>
+   </div>
+  </div>
+ </article>`;
+}
+
+function renderMovies(){
+ let q=document.getElementById("movieSearch").value.toLowerCase();
+ let results=movies.filter(x=>(movieFilter==="All"||x.genre===movieFilter)&&
+ (x.title+" "+x.genre+" "+x.year).toLowerCase().includes(q));
+ document.getElementById("movieGrid").innerHTML=results.length?results.map(x=>card(x,"movies")).join(""):'<div class="empty">NO MOVIES FOUND</div>';
+ document.getElementById("movieCount").textContent=results.length+" TITLES";
+}
+function renderScenes(){
+ let q=document.getElementById("sceneSearch").value.toLowerCase();
+ let results=scenes.filter(x=>(sceneFilter==="All"||x.genre===sceneFilter)&&
+ (x.title+" "+x.genre).toLowerCase().includes(q));
+ document.getElementById("sceneGrid").innerHTML=results.length?results.map(x=>card(x,"scenes")).join(""):'<div class="empty">NO SCENE PACKS FOUND</div>';
+ document.getElementById("sceneCount").textContent=results.length+" COLLECTIONS";
+}
+function setFilter(type,value,button){
+ if(type==="movies")movieFilter=value;else sceneFilter=value;
+ document.querySelectorAll("#"+(type==="movies"?"movieFilters":"sceneFilters")+" .filter").forEach(x=>x.classList.remove("active"));
  button.classList.add("active");
- document.querySelectorAll(".pack").forEach(pack=>{
-  pack.classList.toggle("hidden",
-   category!=="all" && pack.dataset.category!==category
-  );
- });
+ type==="movies"?renderMovies():renderScenes();
 }
-
-function playMovie(source,title){
- const player=document.getElementById("moviePlayer");
- const video=document.getElementById("video");
- document.getElementById("movieTitle").textContent=title;
- player.style.display="block";
- video.pause();
- video.src=source;
- player.scrollIntoView({behavior:"smooth",block:"center"});
- video.play().catch(()=>{
-  document.getElementById("movieTitle").textContent=
-   title+" — Add your authorized movie video file first.";
- });
+function openLibrary(type){
+ document.getElementById("home").classList.add("hidden");
+ document.querySelectorAll(".library").forEach(x=>x.classList.remove("active"));
+ document.getElementById(type).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+ type==="movies"?renderMovies():renderScenes();
 }
+function goHome(){
+ document.getElementById("home").classList.remove("hidden");
+ document.querySelectorAll(".library").forEach(x=>x.classList.remove("active"));
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+function showModal(html){
+ document.getElementById("modalBody").innerHTML=html;
+ document.getElementById("detailModal").classList.add("show");
+}
+function closeModal(){
+ document.getElementById("detailModal").classList.remove("show");
+ document.getElementById("modalBody").innerHTML="";
+}
+function details(type,index){
+ let x=(type==="movies"?movies:scenes)[index];
+ showModal(`
+ <img src="${x.image}" style="width:100%;max-height:300px;object-fit:cover">
+ <div class="modal-content">
+  <div class="eyebrow">${x.genre} · ${x.year}</div>
+  <h2>${x.title}</h2>
+  <p>${x.desc}</p>
+  <p class="notice">Video playback requires a direct video URL that you own or are authorized to use.</p>
+  <button class="primary" onclick="playItem('${type}',${index})">PLAY / OPEN PLAYER ▶</button>
+ </div>`);
+}
+function playItem(type,index){
+ let x=(type==="movies"?movies:scenes)[index];
+ if(!x.video){
+  showModal(`
+  <div class="modal-content">
+   <div class="eyebrow">ROBIN.EDIT PLAYER</div>
+   <h2>${x.title}</h2>
+   <p>${x.desc}</p>
+   <p class="notice">This title has no video source connected yet. Add a direct MP4/WebM URL that you own or have permission to stream.</p>
+   <input id="videoUrl" placeholder="Paste authorized video URL here">
+   <button class="primary" onclick="startVideo('${type}',${index})">OPEN VIDEO ▶</button>
+  </div>`);
+  return;
+ }
+ startVideo(type,index);
+}
+function startVideo(type,index){
+ let x=(type==="movies"?movies:scenes)[index];
+ let url=x.video||document.getElementById("videoUrl")?.value.trim();
+ if(!url){alert("Please enter a video URL.");return;}
+ if(!/^https?:\/\//i.test(url)){alert("Enter a valid http/https video URL.");return;}
+ x.video=url;
+ showModal(`
+ <div class="video">
+  <video controls autoplay playsinline src="${url}"></video>
+ </div>
+ <div class="modal-content">
+  <h2>${x.title}</h2>
+  <p>ROBIN.EDIT CINEMA PLAYER</p>
+ </div>`);
+}
+function collab(){
+ window.open("https://instagram.com/robinsolace","_blank");
+}
+renderMovies();
+renderScenes();
 </script>
-
 </body>
 </html>
