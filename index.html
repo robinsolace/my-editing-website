@@ -4,93 +4,771 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ROBIN.EDIT | Cinematic Video Editor</title>
+<title>ROBIN.EDIT — Beyond Ordinary</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;background:#03060d;color:white;
-  font-family:Arial,sans-serif;text-align:center;
+:root {
+  --blue: #168bff;
+  --cyan: #65e0ff;
+  --bg: #03050b;
+  --panel: rgba(9, 18, 36, .76);
+  --muted: #8c9bb5;
 }
-.hero{
-  min-height:100vh;padding:35px 20px;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior:smooth; }
+
+body {
+  background:var(--bg);
+  color:#fff;
+  font-family:Inter, sans-serif;
+  overflow-x:hidden;
+}
+
+a { color:inherit; text-decoration:none; }
+button,input { font:inherit; }
+
+/* Ambient background */
+.ambient {
+  position:fixed;
+  inset:0;
+  z-index:-5;
   background:
-    radial-gradient(ellipse at center,#002b70 0%,#00132e 40%,#03060d 75%);
+    radial-gradient(ellipse at 20% 20%,#07356b55,transparent 45%),
+    radial-gradient(ellipse at 80% 70%,#004b8b33,transparent 45%),
+    #03050b;
 }
-.logo{
-  width:150px;height:150px;border-radius:50%;
-  border:4px solid #0066ff;object-fit:cover;
-  object-position:center 30%;
-  box-shadow:0 0 30px #0066ff66;
-  margin-bottom:30px;
+
+.ambient::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(#168bff08 1px,transparent 1px),
+    linear-gradient(90deg,#168bff08 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:linear-gradient(to bottom,black,transparent 80%);
 }
-.tag{
-  color:#3399ff;letter-spacing:5px;
-  font-size:12px;font-weight:bold;
+
+#particles {
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
 }
-h1{
-  font-size:clamp(38px,9vw,70px);
-  margin:20px 0;
+
+/* Navigation */
+nav {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 7%;
+  background:#03050bd9;
+  border-bottom:1px solid #168bff20;
+  backdrop-filter:blur(18px);
 }
-h1 span{color:#0066ff}
-h2{font-size:24px}
-p{
-  color:#bbb;line-height:1.7;
-  max-width:650px;
+
+.logo {
+  font-family:Orbitron,sans-serif;
+  font-size:19px;
+  font-weight:900;
+  letter-spacing:2px;
 }
-a{
-  display:block;text-decoration:none;color:white;
-  border:1px solid #555;border-radius:50px;
-  padding:18px 30px;margin:15px;
-  width:min(100%,400px);
-  letter-spacing:3px;font-weight:bold;
+
+.logo span { color:var(--blue); }
+
+.navlinks {
+  display:flex;
+  align-items:center;
+  gap:28px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  color:#a9b7cc;
 }
-a.primary{
-  background:#0066ff;border-color:#0066ff;
-  box-shadow:0 0 25px #0066ff55;
+
+.navlinks a { transition:.25s; }
+.navlinks a:hover { color:var(--cyan); }
+
+.nav-cta {
+  border:1px solid #168bff66;
+  padding:11px 16px;
+  border-radius:3px;
+  color:white !important;
 }
-.categories{
-  color:#6688bb;letter-spacing:4px;
-  line-height:2;margin-top:45px;
+
+/* Hero */
+.hero {
+  min-height:100vh;
+  position:relative;
+  display:flex;
+  align-items:center;
+  padding:130px 8% 90px;
+  overflow:hidden;
+}
+
+.hero-art {
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  background:
+    linear-gradient(90deg,#03050b 5%,#03050bce 40%,#03050b44 75%,#03050b99),
+    linear-gradient(0deg,#03050b 0%,transparent 35%,#03050b55),
+    url("luffy-bg.jpg") center 25% / cover no-repeat;
+  opacity:.78;
+  animation:artReveal 1.5s ease both;
+}
+
+.hero-art::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 75% 50%,#168bff20,transparent 50%);
+}
+
+@keyframes artReveal {
+  from { opacity:0; transform:scale(1.06); }
+  to { opacity:.78; transform:scale(1); }
+}
+
+.hero-content {
+  max-width:720px;
+  animation:rise .9s ease both;
+}
+
+@keyframes rise {
+  from { opacity:0; transform:translateY(30px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.status {
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 14px;
+  border:1px solid #168bff44;
+  background:#06152bbd;
+  color:#a9d9ff;
+  font-size:10px;
+  letter-spacing:2px;
+  border-radius:30px;
+  margin-bottom:28px;
+}
+
+.status i {
+  width:7px;
+  height:7px;
+  background:#4bffb0;
+  border-radius:50%;
+  box-shadow:0 0 12px #4bffb0;
+}
+
+.hero h1 {
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(48px,9vw,105px);
+  line-height:1.05;
+  letter-spacing:-3px;
+  font-weight:900;
+}
+
+.hero h1 span {
+  color:var(--blue);
+  text-shadow:0 0 35px #168bff88;
+}
+
+.hero h2 {
+  margin-top:20px;
+  font-size:clamp(13px,2vw,18px);
+  letter-spacing:6px;
+  color:#b5c9e4;
+}
+
+.hero p {
+  max-width:530px;
+  color:#9baac1;
+  line-height:1.9;
+  font-size:14px;
+  margin:25px 0 32px;
+}
+
+.profile-line {
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:25px;
+}
+
+.profile {
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--blue);
+  box-shadow:0 0 18px #168bff55;
+}
+
+.profile-line strong {
+  display:block;
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.profile-line small {
+  color:var(--muted);
+  font-size:10px;
+  display:block;
+  margin-top:5px;
+}
+
+.actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:16px 22px;
+  border:1px solid #168bff55;
+  background:#071326cc;
+  color:#fff;
+  border-radius:3px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  transition:all .3s;
+}
+
+.btn:hover {
+  transform:translateY(-3px);
+  border-color:var(--cyan);
+  box-shadow:0 8px 30px #168bff22;
+}
+
+.btn.primary {
+  background:var(--blue);
+  border-color:var(--blue);
+  box-shadow:0 0 25px #168bff33;
+}
+
+.btn.primary:hover {
+  background:#40a4ff;
+  box-shadow:0 0 35px #168bff66;
+}
+
+.hero-bottom {
+  position:absolute;
+  bottom:30px;
+  left:8%;
+  right:8%;
+  display:flex;
+  justify-content:space-between;
+  color:#52647f;
+  font-size:9px;
+  letter-spacing:3px;
+}
+
+/* Search */
+.search-section {
+  padding:0 8% 45px;
+  margin-top:-15px;
+  position:relative;
+}
+
+.searchbox {
+  max-width:760px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:9px;
+  background:#071326dd;
+  border:1px solid #168bff44;
+  box-shadow:0 15px 60px #0008;
+}
+
+.searchbox input {
+  flex:1;
+  min-width:0;
+  background:transparent;
+  color:white;
+  border:0;
+  outline:0;
+  padding:12px;
+  font-size:13px;
+}
+
+.searchbox input::placeholder { color:#61718a; }
+
+/* Sections */
+section.content {
+  padding:100px 8%;
+  scroll-margin-top:80px;
+}
+
+.section-head {
+  text-align:center;
+  margin-bottom:50px;
+}
+
+.kicker {
+  color:var(--cyan);
+  font-family:Orbitron,sans-serif;
+  font-size:10px;
+  letter-spacing:4px;
+  margin-bottom:16px;
+}
+
+.section-head h2 {
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(27px,5vw,46px);
+  letter-spacing:1px;
+}
+
+.section-head p {
+  max-width:550px;
+  margin:18px auto 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:20px;
+  max-width:1150px;
+  margin:auto;
+}
+
+.card {
+  position:relative;
+  min-height:270px;
+  padding:28px;
+  overflow:hidden;
+  border:1px solid #168bff24;
+  background:linear-gradient(145deg,#0a1830d9,#050a14e8);
+  transition:.35s;
+}
+
+.card::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:2px;
+  background:var(--cyan);
+  transition:.4s;
+}
+
+.card:hover {
+  transform:translateY(-7px);
+  border-color:#168bff88;
+  box-shadow:0 20px 60px #0006,0 0 30px #168bff0d;
+}
+
+.card:hover::before { width:100%; }
+
+.card-num {
+  color:#4b8fc9;
+  font-family:Orbitron,sans-serif;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+.card h3 {
+  font-size:20px;
+  margin:28px 0 12px;
+}
+
+.card p {
+  color:#8c9bb5;
+  font-size:12px;
+  line-height:1.8;
+}
+
+.card .btn { margin-top:25px; }
+
+/* Artwork cards */
+.art-card {
+  min-height:340px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  background-size:cover;
+  background-position:center;
+  border:1px solid #168bff33;
+}
+
+.art-card::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(0deg,#03050bf2,transparent 80%);
+}
+
+.art-card > * { position:relative; z-index:1; }
+
+.art-card h3 { font-family:Orbitron,sans-serif; }
+
+/* Collaboration */
+.collab-bg {
+  background:radial-gradient(ellipse at center,#06244a66,transparent 70%);
+}
+
+.requirements {
+  max-width:780px;
+  margin:auto;
+  padding:clamp(25px,5vw,50px);
+  border:1px solid #168bff44;
+  background:#050c19e8;
+  box-shadow:0 20px 80px #0005;
+}
+
+.requirements h3 {
+  font-family:Orbitron,sans-serif;
+  font-size:17px;
+  letter-spacing:2px;
+  margin-bottom:25px;
+}
+
+.requirements li {
+  list-style:none;
+  display:flex;
+  gap:14px;
+  padding:17px 0;
+  border-bottom:1px solid #168bff18;
+  color:#aebdd2;
+  font-size:13px;
+  line-height:1.7;
+}
+
+.requirements li span {
+  color:var(--cyan);
+}
+
+.requirements .actions {
+  margin-top:30px;
+}
+
+/* Footer */
+footer {
+  padding:35px 8%;
+  border-top:1px solid #168bff20;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  color:#52647f;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+footer strong { color:var(--blue); }
+
+/* Reveal on scroll */
+.reveal {
+  opacity:0;
+  transform:translateY(25px);
+  transition:opacity .7s,transform .7s;
+}
+
+.reveal.visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:850px) {
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .navlinks { gap:14px; }
+}
+
+@media(max-width:600px) {
+  nav { padding:17px 5%; }
+  .logo { font-size:15px; }
+  .navlinks { gap:10px; font-size:9px; }
+  .nav-cta { display:none; }
+  .hero { padding:130px 6% 100px; }
+  .hero-art {
+    background:
+      linear-gradient(90deg,#03050bd9,#03050b77),
+      linear-gradient(0deg,#03050b,transparent 70%),
+      url("luffy-bg.jpg") 60% center/cover no-repeat;
+  }
+  .hero h1 { letter-spacing:-2px; }
+  .hero h2 { letter-spacing:3px; }
+  .hero-bottom { font-size:8px; }
+  .grid { grid-template-columns:1fr; }
+  section.content { padding:75px 6%; }
+  .search-section { padding:0 6% 30px; }
+  .searchbox { gap:5px; }
+  .searchbox .btn { padding:14px; }
+  footer { flex-direction:column; text-align:center; }
 }
 </style>
 </head>
 
 <body>
-<section class="hero">
 
-  <img class="logo" src="robin.png" alt="Robin">
+<div class="ambient"></div>
+<canvas id="particles"></canvas>
 
-  <div class="tag">@ROBIN.EDIT · VIDEO EDITOR</div>
+<nav>
+  <a href="#home" class="logo">ROBIN<span>.</span>EDIT</a>
+  <div class="navlinks">
+    <a href="#work">WORK</a>
+    <a href="#packs">PACKS</a>
+    <a href="#collab">COLLAB</a>
+    <a href="#collab" class="nav-cta">LET'S TALK ↗</a>
+  </div>
+</nav>
 
-  <h1>ROBIN<span>.</span>EDIT</h1>
+<header class="hero" id="home">
+  <div class="hero-art"></div>
 
-  <h2>A CINEMATIC VIDEO EDITOR</h2>
+  <div class="hero-content">
+    <div class="status"><i></i> CREATIVE MODE: ACTIVE</div>
 
-  <p>
-    🎬 Cinema · Edits · Stories — creating emotions
-    through every cut. Marvel action, anime battles,
-    Indian cinema and romantic storytelling.
-  </p>
+    <div class="profile-line">
+      <img src="robin.png" class="profile" alt="Robin">
+      <div>
+        <strong>ROBIN.EDIT</strong>
+        <small>VIDEO EDITOR / DIGITAL CREATOR</small>
+      </div>
+    </div>
 
-  <a href="#work">EXPLORE MY WORK</a>
+    <h1>BEYOND<br>ORDINARY<span>.</span></h1>
+    <h2>CREATE. EDIT. INSPIRE.</h2>
 
-  <a class="primary"
-     href="https://instagram.com/"
-     target="_blank">
-    SEND YOUR EDIT
-  </a>
+    <p>
+      I turn iconic scenes into cinematic experiences.
+      Welcome to my world of anime, dark heroes,
+      powerful edits and visual storytelling.
+    </p>
 
-  <div id="work" class="categories">
-    MARVEL · ANIME & FANTASY
-    <br><br>
-    INDIAN CINEMA
-    <br><br>
-    ROMANTIC EDITS
+    <div class="actions">
+      <a href="#work" class="btn primary">EXPLORE MY WORK ↗</a>
+      <a href="#packs" class="btn">DISCOVER SCENE PACKS ↓</a>
+    </div>
   </div>
 
+  <div class="hero-bottom">
+    <span>ANIME × CINEMA × ART</span>
+    <span>SCROLL TO EXPLORE ↓</span>
+  </div>
+</header>
+
+<div class="search-section" id="search-area">
+  <div class="searchbox">
+    <input id="search" type="search"
+      placeholder="Search edits, anime, scene packs...">
+    <button class="btn primary" id="searchBtn">SEARCH ↗</button>
+  </div>
+</div>
+
+<section class="content reveal" id="work">
+  <div class="section-head">
+    <div class="kicker">01 — THE PORTFOLIO</div>
+    <h2>MY CREATIVE UNIVERSE</h2>
+    <p>Every frame has a story. Every edit has an identity.</p>
+  </div>
+
+  <div class="grid">
+    <article class="card art-card"
+      style="background-image:linear-gradient(0deg,#03050b,transparent),url('wolverine-bg.jpg')"
+      data-search="marvel wolverine dark heroes">
+      <div class="card-num">01 / MARVEL</div>
+      <h3>DARK HEROES</h3>
+      <p>Wolverine. Antiheroes. Unforgettable moments.</p>
+      <a href="#collab" class="btn">VIEW PROJECTS ↗</a>
+    </article>
+
+    <article class="card art-card"
+      style="background-image:linear-gradient(0deg,#03050b,transparent),url('luffy-bg.jpg')"
+      data-search="anime luffy one piece">
+      <div class="card-num">02 / ANIME</div>
+      <h3>ANIME WORLD</h3>
+      <p>Iconic characters. Legendary scenes.</p>
+      <a href="#collab" class="btn">VIEW PROJECTS ↗</a>
+    </article>
+
+    <article class="card"
+      data-search="cinematic movie edits">
+      <div class="card-num">03 / CINEMA</div>
+      <h3>CINEMATIC EDITS</h3>
+      <p>Visual storytelling through rhythm, color and emotion.</p>
+      <a href="#collab" class="btn">COMING SOON ↗</a>
+    </article>
+  </div>
 </section>
+
+<section class="content reveal" id="packs">
+  <div class="section-head">
+    <div class="kicker">02 — THE RESOURCE VAULT</div>
+    <h2>SCENE PACKS</h2>
+    <p>High-quality scenes for creators. New drops coming soon.</p>
+  </div>
+
+  <div class="grid">
+    <article class="card" data-search="anime scene packs">
+      <div class="card-num">PACK 001</div>
+      <h3>ANIME ARCHIVE</h3>
+      <p>Anime scenes for your next edit.</p>
+      <a href="#packs" class="btn">COMING SOON</a>
+    </article>
+
+    <article class="card" data-search="marvel superhero scene packs">
+      <div class="card-num">PACK 002</div>
+      <h3>HERO ARCHIVE</h3>
+      <p>Superhero and action scene resources.</p>
+      <a href="#packs" class="btn">COMING SOON</a>
+    </article>
+
+    <article class="card" data-search="movie cinematic scene packs">
+      <div class="card-num">PACK 003</div>
+      <h3>CINEMA ARCHIVE</h3>
+      <p>Cinematic scenes and visual inspiration.</p>
+      <a href="#packs" class="btn">COMING SOON</a>
+    </article>
+  </div>
+</section>
+
+<section class="content reveal" id="watch">
+  <div class="section-head">
+    <div class="kicker">03 — THE MOVIE EXPERIENCE</div>
+    <h2>FIND YOUR NEXT MOVIE</h2>
+    <p>Discover where movies are available to stream.</p>
+  </div>
+  <div class="actions" style="justify-content:center">
+    <a class="btn primary" href="https://www.justwatch.com/"
+       target="_blank" rel="noopener">EXPLORE MOVIES ↗</a>
+  </div>
+</section>
+
+<section class="content collab-bg reveal" id="collab">
+  <div class="section-head">
+    <div class="kicker">04 — LET'S CREATE</div>
+    <h2>COLLABORATION</h2>
+    <p>Have the vision? Meet the requirements and let's make something great.</p>
+  </div>
+
+  <div class="requirements">
+    <h3>COLLABORATION REQUIREMENTS</h3>
+    <ul>
+      <li><span>✦</span> You must follow my social media profile.</li>
+      <li><span>✦</span> You must have more than 1,000 followers.</li>
+      <li><span>✦</span> Your videos must be properly edited and presented.</li>
+      <li><span>✦</span> Your content must be original, not copied.</li>
+      <li><span>✦</span> Your videos must be in HD quality.</li>
+      <li><span>✦</span> Views are not required. Quality and originality matter most.</li>
+    </ul>
+    <div class="actions">
+      <a href="https://instagram.com/" class="btn primary"
+         target="_blank" rel="noopener">REQUEST A COLLAB ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 <strong>ROBIN.EDIT</strong></span>
+  <span>BUILT FOR THE LOVE OF EDITING</span>
+</footer>
+
+<script>
+/* Search cards */
+const searchInput = document.getElementById("search");
+const cards = document.querySelectorAll("[data-search]");
+
+function searchItems() {
+  const query = searchInput.value.toLowerCase().trim();
+
+  cards.forEach(card => {
+    const text = (
+      card.innerText + " " + card.dataset.search
+    ).toLowerCase();
+
+    card.style.display = text.includes(query) ? "" : "none";
+  });
+
+  document.getElementById("work").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+document.getElementById("searchBtn")
+  .addEventListener("click", searchItems);
+
+searchInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") searchItems();
+});
+
+/* Reveal sections while scrolling */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, { threshold:0.12 });
+
+document.querySelectorAll(".reveal")
+  .forEach(el => observer.observe(el));
+
+/* Floating blue particles */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  particles = Array.from({length:45}, () => ({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*1.5+.3,
+    speed:Math.random()*.35+.1,
+    alpha:Math.random()*.5+.15
+  }));
+}
+
+function animateParticles() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p => {
+    p.y -= p.speed;
+    if (p.y < -5) {
+      p.y = canvas.height+5;
+      p.x = Math.random()*canvas.width;
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(70,170,255,${p.alpha})`;
+    ctx.fill();
+  });
+
+  requestAnimationFrame(animateParticles);
+}
+
+resizeCanvas();
+animateParticles();
+window.addEventListener("resize",resizeCanvas);
+</script>
+
 </body>
 </html>
