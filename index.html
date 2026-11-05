@@ -1,439 +1,385 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ROBIN.EDIT | THE EDITVERSE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROBIN.EDIT | Beyond The Frame</title>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@400;600;700;800&display=swap');
-*{box-sizing:border-box}
-body{margin:0;background:#03060d;color:white;font-family:Inter,Arial}
-button,input,select{font:inherit}
-button{cursor:pointer}
-:root{--blue:#00baff;--panel:#0b1422}
-header{height:72px;padding:0 6%;display:flex;align-items:center;justify-content:space-between;background:#060b14ee;border-bottom:1px solid #16324b;position:sticky;top:0;z-index:10;backdrop-filter:blur(15px)}
-.logo{font:900 23px Orbitron;letter-spacing:2px}.logo span{color:var(--blue)}
-nav{display:flex;gap:20px}
-nav button,.back{background:none;border:0;color:#b7c8da;font-size:11px;font-weight:800}
-nav button:hover,.back:hover{color:var(--blue)}
-.hero{min-height:570px;padding:100px 8%;display:flex;align-items:center;background:linear-gradient(90deg,#03060d 5%,#03060dc9 55%,#03060d55),linear-gradient(0deg,#03060d,transparent),url('https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1600') center/cover}
-.hero-content{max-width:650px}
-.eyebrow{color:var(--blue);font-size:10px;font-weight:900;letter-spacing:4px}
-h1,h2,h3{font-family:Orbitron}
-.hero h1{font-size:clamp(40px,7vw,78px);line-height:1.1;margin:20px 0}
-.hero h1 span{color:var(--blue);text-shadow:0 0 30px #00baff66}
-.hero p{color:#aab8ca;line-height:1.8;font-size:14px;max-width:500px}
-.btn{border:1px solid var(--blue);background:var(--blue);color:#00111c;padding:14px 21px;font-size:10px;font-weight:900;letter-spacing:1px}
-.btn:hover{box-shadow:0 0 25px #00baff77}
-.outline{background:transparent;color:var(--blue)}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
-section{padding:55px 6%}
-.heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:25px}
-.heading h2{font-size:25px;margin:9px 0}
-.heading h2 span{color:var(--blue)}
-.description{font-size:11px;color:#8294aa}
-.quick{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.quick article{height:200px;border:1px solid #ffffff25;border-radius:6px;padding:25px;display:flex;flex-direction:column;justify-content:end;background:linear-gradient(0deg,#03060d,transparent),url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=900') center/cover}
-.quick article:nth-child(2){background-image:linear-gradient(0deg,#03060d,transparent),url('https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=900')}
-.quick h3{margin:0 0 12px}.quick p{font-size:12px;color:#aab8ca}
-.page{display:none;min-height:70vh}.page.active{display:block}
-.top{padding:35px 6%;background:linear-gradient(100deg,#09213a,#03060d);border-bottom:1px solid #16324b}
-.top h1{font-size:clamp(25px,5vw,43px);margin:13px 0}
-.search{width:100%;max-width:650px;background:#0a1524;border:1px solid #28445d;padding:15px;color:white;outline:none;margin-top:20px;border-radius:3px}
-.search:focus{border-color:var(--blue)}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
-.filter{background:#0b1728;color:#aebed0;border:1px solid #26394d;padding:9px 14px;font-size:10px;font-weight:800}
-.filter.active,.filter:hover{border-color:var(--blue);color:var(--blue)}
-.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:17px}
-.card{background:#0a1320;border:1px solid #182c40;border-radius:5px;overflow:hidden;transition:.25s;min-width:0}
-.card:hover{transform:translateY(-5px);border-color:var(--blue)}
-.poster{width:100%;aspect-ratio:2/3;object-fit:cover;background:#152237;display:block}
-.info{padding:11px}
-.info h3{font:700 12px Inter;margin:0 0 7px;line-height:1.5}
-.info p{font-size:10px;color:#8495aa;margin:0}
-.info button{width:100%;padding:10px;margin-top:10px;background:#071d30;border:1px solid #087eb4;color:var(--blue);font-size:9px;font-weight:900}
-.info button:hover{background:var(--blue);color:#00111c}
-.load{display:block;margin:30px auto}
-.player{position:fixed;inset:0;background:#000e;z-index:30;display:none;align-items:center;justify-content:center;padding:15px}
-.player.show{display:flex}
-.player-box{width:100%;max-width:850px;background:#0b1422;border:1px solid var(--blue);padding:12px;max-height:95vh;overflow:auto}
-.player-box iframe,.player-box video{width:100%;aspect-ratio:16/9;border:0;background:#000}
-.player-box h3{font-size:17px}
-.close{float:right;background:none;border:0;color:white;font-size:25px}
-.formbox{max-width:650px;padding:20px;background:#0a1422;border:1px solid #1d4562}
-.formbox input,.formbox select{width:100%;padding:13px;background:#030a14;border:1px solid #28445d;color:white;margin:8px 0}
-.requirements{line-height:2.2;color:#bdcbdc;font-size:13px;padding-left:20px}
-.requirements li::marker{color:var(--blue)}
-footer{text-align:center;border-top:1px solid #173149;padding:35px 5%;color:#8294aa;font-size:11px;line-height:2}
-footer a{color:var(--blue);text-decoration:none}
-.empty{text-align:center;color:#8294aa;padding:35px;grid-column:1/-1}
-@media(max-width:850px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:550px){
- header{padding:0 4%;height:65px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ background:#070811;
+ color:white;
+ font-family:Arial,sans-serif;
+ overflow-x:hidden;
+}
+:root{
+ --cyan:#78edff;
+ --purple:#a58bff;
+ --panel:#14182a;
+}
+nav{
+ position:sticky;top:0;z-index:10;
+ display:flex;justify-content:space-between;
+ align-items:center;padding:18px 5%;
+ background:#080914ed;
+ backdrop-filter:blur(20px);
+ border-bottom:1px solid #ffffff20;
+}
+.logo{
+ font-size:23px;font-weight:1000;
+ letter-spacing:3px;
+}
+.logo span{color:var(--cyan)}
+.navlinks{display:flex;gap:8px}
+button{
+ cursor:pointer;color:white;
+ border:1px solid #ffffff25;
+ background:#ffffff0c;
+ padding:11px 15px;border-radius:10px;
+}
+button:hover{
+ border-color:var(--cyan);
+ color:var(--cyan);
+}
+.hero{
+ min-height:520px;padding:100px 7%;
+ display:flex;align-items:center;
+ background:
+ radial-gradient(circle at 80% 30%,#6039a755,transparent 40%),
+ linear-gradient(120deg,#080914,#10152b,#080914);
+ position:relative;overflow:hidden;
+}
+.hero h1{
+ font-size:clamp(55px,9vw,105px);
+ line-height:.9;letter-spacing:-5px;
+}
+.hero h1 span{
+ background:linear-gradient(90deg,#fff,var(--cyan),var(--purple));
+ color:transparent;background-clip:text;
+}
+.hero p{
+ color:#aebbd0;max-width:520px;
+ line-height:1.8;margin-top:25px;
+}
+.primary{
+ background:linear-gradient(90deg,var(--cyan),#b7caff);
+ color:#07101a;border:0;font-weight:bold;
+ padding:15px 22px;margin:25px 8px 0 0;
+}
+.quick{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:15px;padding:0 5%;margin-top:-25px;
+ position:relative;
+}
+.quick div{
+ background:linear-gradient(145deg,#1a2038,#101321);
+ border:1px solid #ffffff20;
+ border-radius:15px;padding:25px;
+ cursor:pointer;transition:.3s;
+}
+.quick div:hover{
+ transform:translateY(-8px);
+ border-color:var(--cyan);
+ box-shadow:0 10px 35px #78edff25;
+}
+.quick h3{margin:10px 0}
+.quick p{font-size:12px;color:#9ba4b9}
+main{padding:65px 5%}
+.page{display:none;animation:fade .4s}
+.page.active{display:block}
+@keyframes fade{
+ from{opacity:0;transform:translateY(15px)}
+ to{opacity:1;transform:translateY(0)}
+}
+.heading{
+ font-size:35px;margin-bottom:25px;
+}
+.search{
+ width:100%;padding:16px;
+ background:#14182a;color:white;
+ border:1px solid #ffffff25;
+ border-radius:12px;font-size:16px;
+ margin-bottom:20px;
+}
+.filters{display:flex;gap:10px;margin-bottom:25px}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+ gap:20px;
+}
+.card{cursor:pointer;transition:.3s}
+.card:hover{transform:translateY(-7px)}
+.poster{
+ height:245px;overflow:hidden;
+ border-radius:12px;background:#151a2b;
+ border:1px solid #ffffff20;
+}
+.poster img{
+ width:100%;height:100%;object-fit:cover;
+}
+.card h4{margin-top:10px;font-size:14px}
+.card small{color:#9ba4b9}
+.back{margin-bottom:20px}
+.detail{
+ display:grid;grid-template-columns:220px 1fr;
+ gap:25px;background:#14182a;
+ padding:20px;border-radius:15px;
+}
+.detail img{
+ width:100%;border-radius:12px;
+}
+.detail h2{font-size:32px;margin-bottom:15px}
+.detail p{color:#b4bfd0;line-height:1.8}
+.servers{margin-top:20px;display:grid;gap:10px}
+.server{
+ padding:15px;background:#20263c;
+ border:1px solid #ffffff20;
+ border-radius:10px;text-align:left;
+}
+.collab{
+ background:linear-gradient(135deg,#171c32,#0a0d18);
+ border:1px solid #ffffff20;
+ border-radius:18px;padding:35px;
+}
+.collab h2{font-size:45px;margin:15px 0}
+.collab li{
+ list-style:none;margin:18px 0;color:#d6dbea;
+}
+.collab li:before{content:"✦ ";color:var(--cyan)}
+.avatar{
+ width:75px;height:75px;border-radius:50%;
+ display:grid;place-items:center;
+ background:linear-gradient(135deg,var(--cyan),var(--purple));
+ color:#080914;font-weight:1000;font-size:22px;
+}
+.meter{height:9px;background:#ffffff20;border-radius:20px;margin:15px 0}
+.meter span{display:block;width:100%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:20px}
+footer{
+ padding:30px 5%;border-top:1px solid #ffffff20;
+ color:#929bad;font-size:12px;
+}
+@media(max-width:650px){
+ nav{padding:14px 3%;flex-wrap:wrap;gap:10px}
  .logo{font-size:18px}
- nav{gap:9px}nav button{font-size:8px}
- .hero{padding:70px 6%;min-height:500px}
- section{padding:40px 5%}
+ .navlinks{gap:4px}
+ button{padding:9px;font-size:11px}
+ .hero{padding:80px 6%;min-height:440px}
  .quick{grid-template-columns:1fr}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
- .info{padding:8px}
- .heading h2{font-size:20px}
+ main{padding:45px 4%}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+ .poster{height:225px}
+ .detail{grid-template-columns:105px 1fr;gap:13px;padding:12px}
+ .detail h2{font-size:22px}
+ .collab{padding:22px}
 }
 </style>
 </head>
+
 <body>
 
-<header>
+<nav>
  <div class="logo">ROBIN<span>.</span>EDIT</div>
- <nav>
-  <button onclick="home()">HOME</button>
-  <button onclick="openPage('movies')">MOVIES</button>
-  <button onclick="openPage('series')">SERIES</button>
-  <button onclick="openPage('scenes')">SCENE PACKS</button>
-  <button onclick="openPage('collab')">COLLAB</button>
- </nav>
+ <div class="navlinks">
+  <button onclick="page('home')">HOME</button>
+  <button onclick="page('movies')">MOVIES</button>
+  <button onclick="page('scenes')">SCENES</button>
+  <button onclick="page('collab')">COLLAB</button>
+ </div>
+</nav>
+
+<header class="hero" id="hero">
+ <div>
+  <small style="color:#78edff;letter-spacing:5px">THE ART OF CINEMA</small>
+  <h1>BEYOND<br><span>THE FRAME.</span></h1>
+  <p>Discover cinema, explore editing resources and create something extraordinary with ROBIN.EDIT.</p>
+  <button class="primary" onclick="page('movies')">EXPLORE MOVIES ↗</button>
+  <button onclick="page('scenes')">SCENE PACKS</button>
+ </div>
 </header>
 
-<main id="homePage">
- <div class="hero">
-  <div class="hero-content">
-   <div class="eyebrow">WELCOME TO THE EDITVERSE</div>
-   <h1>YOUR WORLD.<br><span>YOUR CINEMA.</span></h1>
-   <p>Explore thousands of movies, series, cinematic universes and editing collections. Everything in one universe.</p>
-   <div class="actions">
-    <button class="btn" onclick="openPage('movies')">EXPLORE MOVIES ↗</button>
-    <button class="btn outline" onclick="openPage('scenes')">SCENE PACKS</button>
-   </div>
+<section class="quick" id="quick">
+ <div onclick="page('scenes')">
+  <h2>▣</h2><h3>SCENE PACKS</h3>
+  <p>Explore cinematic editing resources.</p>
+ </div>
+ <div onclick="page('movies')">
+  <h2>▶</h2><h3>MOVIE LIBRARY</h3>
+  <p>Discover movies and series.</p>
+ </div>
+ <div onclick="page('collab')">
+  <h2>✦</h2><h3>COLLABORATE</h3>
+  <p>Work with ROBIN.EDIT.</p>
+ </div>
+</section>
+
+<main>
+
+<section class="page active" id="home">
+ <h2 class="heading">WELCOME TO ROBIN.EDIT</h2>
+ <div style="background:#14182a;padding:30px;border-radius:15px">
+  <div class="avatar">RE</div>
+  <h2 style="margin:15px 0">ROBIN.EDIT</h2>
+  <p style="color:#aebbd0">Cinematic Video Editor | Creative Artist</p>
+  <h3 style="margin-top:25px">Editing Quality Target — 100%</h3>
+  <div class="meter"><span></span></div>
+  <p style="color:#aebbd0">HD EDITING • ORIGINAL CONTENT • CINEMATIC STYLE</p>
+ </div>
+</section>
+
+<section class="page" id="movies">
+ <h2 class="heading">MOVIE LIBRARY</h2>
+ <input class="search" id="search" placeholder="Search all movies and series..." oninput="searchMovies()">
+ <div class="filters">
+  <button onclick="setType('all')">ALL</button>
+  <button onclick="setType('movie')">MOVIES</button>
+  <button onclick="setType('tv')">SERIES</button>
+ </div>
+ <div class="grid" id="movieGrid"></div>
+ <button class="primary" onclick="moreMovies()">LOAD MORE</button>
+</section>
+
+<section class="page" id="detail">
+ <button class="back" onclick="page('movies')">← BACK</button>
+ <div class="detail">
+  <img id="dPoster" src="" alt="Poster">
+  <div>
+   <h2 id="dTitle"></h2>
+   <p id="dOverview"></p>
+   <div class="servers" id="servers"></div>
   </div>
  </div>
- <section>
-  <div class="heading"><div><div class="eyebrow">EXPLORE</div><h2>ENTER YOUR <span>UNIVERSE</span></h2></div></div>
-  <div class="quick">
-   <article><h3>MOVIE LIBRARY</h3><p>Marvel, DC, Hollywood, Bollywood and more.</p><button class="btn" onclick="openPage('movies')">OPEN MOVIES</button></article>
-   <article><h3>SCENE PACKS</h3><p>Movie and series editing collections.</p><button class="btn" onclick="openPage('scenes')">OPEN ARCHIVE</button></article>
-  </div>
- </section>
+</section>
+
+<section class="page" id="scenes">
+ <h2 class="heading">SCENE PACK VAULT</h2>
+ <p style="color:#9ba4b9;margin-bottom:25px">
+  Your cinematic scene packs and authorized editing clips.
+ </p>
+ <div class="grid" id="sceneGrid">
+  <p>No scene packs added yet.</p>
+ </div>
+</section>
+
+<section class="page" id="collab">
+ <div class="collab">
+  <small style="color:#78edff;letter-spacing:4px">LET'S CREATE TOGETHER</small>
+  <h2>COLLAB WITH<br>ROBIN.</h2>
+  <ul>
+   <li>You must follow my social media profile.</li>
+   <li>You must have more than 1,000 followers.</li>
+   <li>Your videos must be properly edited and presented.</li>
+   <li>Your content must be original, not copied.</li>
+   <li>Your videos must be in HD quality.</li>
+  </ul>
+  <p style="color:#78edff">Views are not required. Quality and originality matter most.</p>
+  <a href="https://ig.me/m/robinsolace">
+   <button class="primary">MESSAGE ROBIN ↗</button>
+  </a>
+ </div>
+</section>
+
 </main>
 
-<!-- MOVIES -->
-<div class="page" id="movies">
- <div class="top">
-  <button class="back" onclick="home()">← HOME</button>
-  <div class="eyebrow">THE COMPLETE CINEMA DATABASE</div>
-  <h1>ALL <span style="color:var(--blue)">MOVIES</span></h1>
-  <input class="search" id="movieSearch" placeholder="Search any movie..." oninput="searchMedia('movie')">
-  <div class="filters">
-   <button class="filter active" onclick="category('movie','popular',this)">ALL MOVIES</button>
-   <button class="filter" onclick="category('movie','marvel',this)">MARVEL</button>
-   <button class="filter" onclick="category('movie','dc',this)">DC</button>
-   <button class="filter" onclick="category('movie','trending',this)">TRENDING</button>
-   <button class="filter" onclick="category('movie','top_rated',this)">TOP RATED</button>
-   <button class="filter" onclick="category('movie','now_playing',this)">NOW PLAYING</button>
-   <button class="filter" onclick="category('movie','upcoming',this)">UPCOMING</button>
-  </div>
- </div>
- <section>
-  <div class="heading"><h2 id="movieHeading">ALL MOVIES</h2><span class="description" id="movieTotal"></span></div>
-  <div class="grid" id="movieGrid"></div>
-  <button class="btn load" onclick="loadMore('movie')">LOAD MORE MOVIES +</button>
- </section>
-</div>
-
-<!-- SERIES -->
-<div class="page" id="series">
- <div class="top">
-  <button class="back" onclick="home()">← HOME</button>
-  <div class="eyebrow">THE COMPLETE TV DATABASE</div>
-  <h1>ALL <span style="color:var(--blue)">SERIES</span></h1>
-  <input class="search" id="tvSearch" placeholder="Search any series..." oninput="searchMedia('tv')">
-  <div class="filters">
-   <button class="filter active" onclick="category('tv','popular',this)">ALL SERIES</button>
-   <button class="filter" onclick="category('tv','trending',this)">TRENDING</button>
-   <button class="filter" onclick="category('tv','top_rated',this)">TOP RATED</button>
-   <button class="filter" onclick="category('tv','airing_today',this)">AIRING TODAY</button>
-   <button class="filter" onclick="category('tv','on_the_air',this)">ON THE AIR</button>
-   <button class="filter" onclick="category('tv','anime',this)">ANIME</button>
-  </div>
- </div>
- <section>
-  <div class="heading"><h2>ALL SERIES</h2></div>
-  <div class="grid" id="tvGrid"></div>
-  <button class="btn load" onclick="loadMore('tv')">LOAD MORE SERIES +</button>
- </section>
-</div>
-
-<!-- SCENE PACKS -->
-<div class="page" id="scenes">
- <div class="top">
-  <button class="back" onclick="home()">← HOME</button>
-  <div class="eyebrow">THE CREATOR ARCHIVE</div>
-  <h1>SCENE <span style="color:var(--blue)">PACKS</span></h1>
-  <p class="description">Search all movies and series to find their editing collections.</p>
-  <input class="search" id="sceneSearch" placeholder="Search a movie or series..." oninput="searchScenes()">
-  <div class="filters">
-   <button class="filter active" onclick="sceneType='movie';scenePage=1;searchScenes()" >MOVIES</button>
-   <button class="filter" onclick="sceneType='tv';scenePage=1;searchScenes()">SERIES</button>
-   <button class="filter" onclick="showUploads()">MY UPLOADS</button>
-  </div>
- </div>
- <section>
-  <div class="heading"><h2>SCENE <span>COLLECTIONS</span></h2></div>
-  <div class="grid" id="sceneGrid"></div>
-  <button class="btn load" onclick="loadMore('scene')">LOAD MORE +</button>
-  <div style="margin-top:55px" class="formbox">
-   <div class="eyebrow">CREATOR STUDIO</div>
-   <h3>ADD YOUR OWN SCENE PACK</h3>
-   <p class="description">Add an authorized video URL to your personal collection.</p>
-   <input id="clipTitle" placeholder="Movie / Series name">
-   <input id="clipUrl" placeholder="Your authorized MP4 / WebM URL">
-   <input id="clipPoster" placeholder="Poster image URL (optional)">
-   <select id="clipType"><option value="movie">Movie</option><option value="tv">Series</option></select>
-   <button class="btn" onclick="saveClip()">ADD SCENE PACK +</button>
-  </div>
- </section>
-</div>
-
-<!-- COLLAB -->
-<div class="page" id="collab">
- <div class="top">
-  <button class="back" onclick="home()">← HOME</button>
-  <div class="eyebrow">JOIN THE CREATOR COMMUNITY</div>
-  <h1>ROBIN <span style="color:var(--blue)">COLLAB</span></h1>
-  <p class="description">Quality over quantity. Originality over views.</p>
- </div>
- <section>
-  <div class="formbox">
-   <div class="eyebrow">COLLABORATION REQUIREMENTS</div>
-   <h2>BE PART OF THE <span style="color:var(--blue)">EDITVERSE</span></h2>
-   <ul class="requirements">
-    <li>Follow my social media profile.</li>
-    <li>More than 1,000 followers.</li>
-    <li>Videos must be properly edited and presented.</li>
-    <li>Content must be original, not copied.</li>
-    <li>Videos must be in HD quality.</li>
-   </ul>
-   <p style="color:var(--blue);font-size:13px;font-weight:800">Views are not required. Quality and originality matter most.</p>
-   <hr style="border-color:#263b50">
-   <h3>FOLLOW MY PROFILE</h3>
-   <a href="https://instagram.com/robinsolace" target="_blank" style="color:var(--blue)">@robinsolace ↗</a>
-   <p class="description">Follow the profile before requesting a collaboration.</p>
-   <input id="collabName" placeholder="Your name / username">
-   <input id="collabInsta" placeholder="Your Instagram profile link">
-   <input id="collabFollowers" type="number" placeholder="Your follower count">
-   <input id="collabVideo" placeholder="Your original video / portfolio link">
-   <button class="btn" onclick="submitCollab()">SUBMIT COLLAB REQUEST ↗</button>
-   <p class="description" id="collabStatus"></p>
-  </div>
- </section>
-</div>
-
-<!-- PLAYER -->
-<div class="player" id="player" onclick="if(event.target===this)closePlayer()">
- <div class="player-box">
-  <button class="close" onclick="closePlayer()">×</button>
-  <h3 id="playerTitle"></h3>
-  <div id="playerContent"></div>
-  <p class="description">ROBIN.EDIT CINEMA PLAYER</p>
- </div>
-</div>
-
 <footer>
- <div class="logo">ROBIN<span style="color:var(--blue)">.</span>EDIT</div>
- <p>THE EDITVERSE · ONE UNIVERSE, INFINITE STORIES</p>
- <a href="https://instagram.com/robinsolace">@robinsolace</a>
- <p>Movie information and artwork powered by TMDB.</p>
- <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
- <p>© 2026 ROBIN.EDIT</p>
+ © 2026 ROBIN.EDIT — BEYOND THE FRAME.
 </footer>
 
 <script>
-/* ==================================
-   ADD YOUR TMDB API READ ACCESS TOKEN
-================================== */
-const API_TOKEN = "YOUR_TMDB_ACCESS_TOKEN";
+let API_KEY = "";
+let type = "all";
+let currentPage = 1;
+let selected = null;
 
-const BASE="https://api.themoviedb.org/3";
-const IMG="https://image.tmdb.org/t/p/w500";
-let state={
- movie:{category:"popular",page:1,query:""},
- tv:{category:"popular",page:1,query:""},
- scene:{page:1,query:""}
-};
-let sceneType="movie";
-let results={movie:[],tv:[],scene:[]};
-let timers={};
-
-async function api(path){
- if(API_TOKEN==="YOUR_TMDB_ACCESS_TOKEN"){
-  throw Error("Add your TMDB API Read Access Token in the code first.");
- }
- const r=await fetch(BASE+path,{headers:{Authorization:"Bearer "+API_TOKEN,accept:"application/json"}});
- if(!r.ok)throw Error("TMDB request failed: "+r.status);
- return r.json();
-}
-function openPage(id){
- document.getElementById("homePage").style.display="none";
+function page(id){
  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
  document.getElementById(id).classList.add("active");
- window.scrollTo(0,0);
- if(id==="movies"&&!results.movie.length)category("movie","popular");
- if(id==="series"&&!results.tv.length)category("tv","popular");
- if(id==="scenes")searchScenes();
-}
-function home(){
- document.getElementById("homePage").style.display="block";
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ document.getElementById("hero").style.display=id==="home"?"flex":"none";
+ document.getElementById("quick").style.display=id==="home"?"grid":"none";
  window.scrollTo(0,0);
 }
-function heading(type){
- return type==="movie"?"movieGrid":type==="tv"?"tvGrid":"sceneGrid";
+
+function setType(t){
+ type=t;
+ currentPage=1;
+ loadMovies();
 }
-function title(item,type){
- return item.title||item.name||"Untitled";
+
+async function tmdb(url){
+ const r=await fetch(url+"&api_key="+API_KEY);
+ if(!r.ok)throw new Error("API error");
+ return r.json();
 }
-function poster(item){
- return item.poster_path?IMG+item.poster_path:"https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500";
-}
-function card(item,type){
- const id=item.id;
- return `<article class="card">
- <img class="poster" loading="lazy" src="${poster(item)}">
- <div class="info">
- <h3>${escapeHTML(title(item,type))}</h3>
- <p>${(item.release_date||item.first_air_date||"").slice(0,4)} · ${item.vote_average?item.vote_average.toFixed(1)+" ★":"New"}</p>
- <button onclick="details('${type}',${id})">DETAILS / PLAY ▶</button>
- </div></article>`;
-}
-function escapeHTML(s){
- return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function endpoint(type,cat,page){
- let media=type==="movie"?"movie":"tv";
- if(cat==="trending")return `/trending/${media}/week?page=${page}`;
- if(cat==="anime")return `/discover/tv?with_genres=16&with_original_language=ja&sort_by=popularity.desc&page=${page}`;
- if(cat==="marvel")return `/discover/movie?with_companies=420&sort_by=primary_release_date.desc&page=${page}`;
- if(cat==="dc")return `/discover/movie?with_companies=9993%7C128064&sort_by=primary_release_date.desc&page=${page}`;
- return `/${media}/${cat}?page=${page}`;
-}
-function category(type,cat,button){
- state[type].category=cat;
- state[type].page=1;
- state[type].query="";
- if(type==="movie")document.getElementById("movieSearch").value="";
- else document.getElementById("tvSearch").value="";
- if(button){
-  button.parentElement.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
-  button.classList.add("active");
+
+async function loadMovies(){
+ if(!API_KEY){
+ document.getElementById("movieGrid").innerHTML=
+ "<p>TMDB API key required to load posters.</p>";
+ return;
  }
- fetchMedia(type,false);
-}
-async function fetchMedia(type,append){
- const grid=document.getElementById(heading(type));
- if(!append){results[type]=[];grid.innerHTML='<div class="empty">LOADING DATABASE...</div>';}
- else grid.innerHTML=grid.innerHTML;
+
+ let q=document.getElementById("search").value.trim();
+ let url=q?
+ `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(q)}&page=${currentPage}`:
+ type==="tv"?
+ `https://api.themoviedb.org/3/tv/popular?page=${currentPage}`:
+ type==="movie"?
+ `https://api.themoviedb.org/3/movie/popular?page=${currentPage}`:
+ `https://api.themoviedb.org/3/trending/all/week?page=${currentPage}`;
+
  try{
-  let path=endpoint(type,state[type].category,state[type].page);
-  let data=await api(path);
-  results[type]=append?[...results[type],...data.results]:data.results;
-  grid.innerHTML=results[type].map(x=>card(x,type)).join("")||'<div class="empty">No results found.</div>';
-  if(type==="movie")document.getElementById("movieTotal").textContent=data.total_results+" TITLES";
- }catch(e){grid.innerHTML=`<div class="empty">${escapeHTML(e.message)}</div>`;}
-}
-async function loadMore(type){
- if(type==="scene"){
-  state.scene.page++;
-  searchScenes(true);
- }else{
-  state[type].page++;
-  fetchMedia(type,true);
+  let data=await tmdb(url);
+  let grid=document.getElementById("movieGrid");
+  if(currentPage===1)grid.innerHTML="";
+
+  data.results.forEach(m=>{
+   if(m.media_type==="person")return;
+   let t=m.media_type||(m.title?"movie":"tv");
+   if(type!=="all"&&t!==type)return;
+
+   let title=m.title||m.name;
+   let poster=m.poster_path?
+   "https://image.tmdb.org/t/p/w500"+m.poster_path:"";
+
+   let card=document.createElement("div");
+   card.className="card";
+   card.innerHTML=`
+    <div class="poster"><img src="${poster}" alt=""></div>
+    <h4></h4><small>${t.toUpperCase()}</small>
+   `;
+   card.querySelector("h4").textContent=title;
+   card.onclick=()=>openMovie(m,t);
+   grid.appendChild(card);
+  });
+ }catch(e){
+  alert("API key check karo aur internet connection dekho.");
  }
 }
-function searchMedia(type){
- clearTimeout(timers[type]);
- timers[type]=setTimeout(async()=>{
-  const q=document.getElementById(type==="movie"?"movieSearch":"tvSearch").value.trim();
-  state[type].query=q;
-  state[type].page=1;
-  const grid=document.getElementById(heading(type));
-  if(!q){fetchMedia(type,false);return;}
-  grid.innerHTML='<div class="empty">SEARCHING...</div>';
-  try{
-   let data=await api(`/search/${type}?query=${encodeURIComponent(q)}&page=1&include_adult=false`);
-   results[type]=data.results;
-   grid.innerHTML=results[type].map(x=>card(x,type)).join("")||'<div class="empty">No results found.</div>';
-  }catch(e){grid.innerHTML=`<div class="empty">${escapeHTML(e.message)}</div>`;}
- },350);
+
+function searchMovies(){
+ clearTimeout(window.searchTimer);
+ window.searchTimer=setTimeout(()=>{
+  currentPage=1;
+  loadMovies();
+ },500);
 }
-async function details(type,id){
- try{
-  let d=await api(`/${type}/${id}?append_to_response=videos`);
-  let videos=d.videos?.results||[];
-  let trailer=videos.find(x=>x.site==="YouTube"&&x.type==="Trailer"&&x.official)||videos.find(x=>x.site==="YouTube"&&x.type==="Trailer");
-  const name=title(d,type);
-  showPlayer(name,trailer?`<iframe allow="autoplay; encrypted-media; fullscreen" allowfullscreen src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(trailer.key)}?autoplay=1"></iframe>`:`<div style="padding:35px;text-align:center;color:#aab8ca">No official trailer available.</div>`);
- }catch(e){alert(e.message);}
+
+function moreMovies(){
+ currentPage++;
+ loadMovies();
 }
-function showPlayer(name,content){
- document.getElementById("playerTitle").textContent=name;
- document.getElementById("playerContent").innerHTML=content;
- document.getElementById("player").classList.add("show");
+
+function openMovie(m,t){
+ selected=m;
+ document.getElementById("dTitle").textContent=m.title||m.name;
+ document.getElementById("dPoster").src=
+ "https://image.tmdb.org/t/p/w500"+m.poster_path;
+ document.getElementById("dOverview").textContent=m.overview||"";
+ document.getElementById("servers").innerHTML=
+ "<p>No authorized video link added for this title.</p>";
+ page("detail");
 }
-function closePlayer(){
- document.getElementById("player").classList.remove("show");
- document.getElementById("playerContent").innerHTML="";
-}
-async function searchScenes(append=false){
- let q=document.getElementById("sceneSearch").value.trim();
- let grid=document.getElementById("sceneGrid");
- if(!append)state.scene.page=1;
- try{
-  let path=q?`/search/${sceneType}?query=${encodeURIComponent(q)}&page=${state.scene.page}`:`/${sceneType}/popular?page=${state.scene.page}`;
-  let data=await api(path);
-  let html=data.results.map(x=>card(x,sceneType)).join("");
-  if(append)grid.innerHTML+=html;
-  else grid.innerHTML=html;
-  if(!grid.innerHTML)grid.innerHTML='<div class="empty">No results found.</div>';
- }catch(e){grid.innerHTML=`<div class="empty">${escapeHTML(e.message)}</div>`;}
-}
-function saveClip(){
- let name=document.getElementById("clipTitle").value.trim();
- let url=document.getElementById("clipUrl").value.trim();
- let img=document.getElementById("clipPoster").value.trim();
- let type=document.getElementById("clipType").value;
- if(!name||!url){alert("Enter a title and video URL.");return;}
- if(!/^https?:\/\//i.test(url)){alert("Enter a valid video URL.");return;}
- let clips=JSON.parse(localStorage.getItem("robinClips")||"[]");
- clips.push({name,url,img,type});
- localStorage.setItem("robinClips",JSON.stringify(clips));
- alert("Your scene pack has been added!");
-}
-function showUploads(){
- let clips=JSON.parse(localStorage.getItem("robinClips")||"[]");
- let grid=document.getElementById("sceneGrid");
- grid.innerHTML=clips.filter(x=>x.type===sceneType).map((x,i)=>`
- <article class="card">
- <img class="poster" src="${x.img||'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500'}">
- <div class="info"><h3>${escapeHTML(x.name)}</h3>
- <button onclick="playUploaded(${i},'${x.type}')">PLAY ▶</button></div></article>`).join("")||'<div class="empty">No personal scene packs yet.</div>';
-}
-function playUploaded(index,type){
- let clips=JSON.parse(localStorage.getItem("robinClips")||"[]").filter(x=>x.type===type);
- let x=clips[index];
- if(!x)return;
- showPlayer(x.name,`<video controls autoplay playsinline src="${x.url}"></video>`);
-}
-function submitCollab(){
- let name=document.getElementById("collabName").value.trim();
- let insta=document.getElementById("collabInsta").value.trim();
- let followers=Number(document.getElementById("collabFollowers").value);
- let video=document.getElementById("collabVideo").value.trim();
- if(!name||!insta||!followers||!video){alert("Please fill all fields.");return;}
- if(followers<=1000){alert("You need MORE THAN 1,000 followers.");return;}
- let message=`ROBIN.EDIT COLLAB APPLICATION\nName: ${name}\nInstagram: ${insta}\nFollowers: ${followers}\nVideo: ${video}`;
- document.getElementById("collabStatus").textContent="Opening your email application to send your request...";
- window.location.href="mailto:?subject="+encodeURIComponent("ROBIN.EDIT Collaboration Application")+"&body="+encodeURIComponent(message);
-}
+
 </script>
 </body>
 </html>
