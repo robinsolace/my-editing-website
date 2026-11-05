@@ -2,185 +2,456 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinematic Video Editing</title>
-    <link rel="stylesheet" href="style.css">
+    <title>XtremeStream | Movies & Scene Packs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .movie-card:hover img {
+            transform: scale(1.1);
+            transition: 0.5s ease;
+        }
+
+        .glow-button {
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+
+        .glow-button:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+            transform: translateY(-3px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hide sections initially */
+        #scene-section, #movie-section { display: none; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#scene-packs">Scene Packs</a></li>
-                <li><a href="#free-movies">Free Movies</a></li>
-                <li><a href="#collaborate">Collaborate</a></li>
-            </ul>
-        </nav>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="fixed top-0 w-full z-50 glass m-2 px-6 py-4 flex justify-between items-center">
+        <div class="text-2xl font-extrabold tracking-tighter">X<span class="text-blue-500">STREAM</span></div>
+        
+        <div class="hidden md:flex space-x-8 font-medium text-sm uppercase tracking-widest">
+            <button onclick="showHome()" class="hover:text-blue-400 transition">Home</button>
+            <button onclick="showScenePacks()" class="hover:text-blue-400 transition">Scene Packs</button>
+            <button onclick="showMovies()" class="hover:text-blue-400 transition">Free Movies</button>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <button onclick="openCollab()" class="bg-blue-600 px-4 py-2 rounded-full text-xs font-bold glow-button">COLLAB</button>
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 p-0.5">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="rounded-full bg-black" alt="DP">
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header id="home-section" class="pt-32 pb-20 px-6 text-center" data-aos="fade-up">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-4">Ultimate <span class="gradient-text">Cinema</span> Experience</h1>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto">4K Scene Packs & Free Hindi Dubbed Movies in High Definition.</p>
+        
+        <div class="mt-10 flex justify-center gap-4">
+            <button onclick="showMovies()" class="bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-blue-500 hover:text-white transition">Watch Now</button>
+            <button onclick="showScenePacks()" class="glass px-8 py-3 rounded-full font-bold hover:bg-white/10 transition">Get Scene Packs</button>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="hero">
-        <h1>Cinematic Video Editing</h1>
-        <button id="scene-pack-btn">Explore Scene Packs</button>
-        <button id="free-movie-btn">Watch Free Movies</button>
-    </section>
+    <!-- SEARCH BAR (Global) -->
+    <div class="px-6 mb-10" data-aos="fade-up">
+        <div class="max-w-xl mx-auto relative">
+            <input type="text" id="searchInput" onkeyup="searchFunction()" placeholder="Search movies or scene packs..." class="w-full bg-white/5 border border-white/10 rounded-full py-4 px-6 focus:outline-none focus:border-blue-500 transition">
+            <i class="fa fa-search absolute right-6 top-5 text-gray-500"></i>
+        </div>
+    </div>
 
-    <!-- Scene Packs Section -->
-    <section id="scene-packs">
-        <h2>Scene Packs</h2>
-        <div class="scene-pack-grid">
-            <!-- Example: Add more divs for different movies -->
-            <div class="scene-pack">
-                <img src="marvel-scene-pack.jpg" alt="Marvel Scene Pack">
-                <h3>Marvel Movies</h3>
+    <!-- SCENE PACKS SECTION -->
+    <main id="scene-section" class="px-6 py-10" data-aos="fade-up">
+        <h2 class="text-3xl font-bold mb-8 border-l-4 border-blue-500 pl-4">Premium 4K Scene Packs</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <!-- Pack 1 -->
+            <div class="scene-item movie-card group cursor-pointer" onclick="openPlayer('Marvel Pack', 'https://example.com/video1')">
+                <div class="relative overflow-hidden rounded-2xl aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/0 transition"></div>
+                    <span class="absolute bottom-3 left-3 bg-blue-600 text-[10px] px-2 py-1 rounded font-bold">4K ULTRA HD</span>
+                </div>
+                <h3 class="mt-3 font-semibold text-sm">Marvel All Movies Pack</h3>
             </div>
-            <div class="scene-pack">
-                <img src="dc-scene-pack.jpg" alt="DC Scene Pack">
-                <h3>DC Movies</h3>
+            <!-- Pack 2 -->
+            <div class="scene-item movie-card group cursor-pointer">
+                <div class="relative overflow-hidden rounded-2xl aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                </div>
+                <h3 class="mt-3 font-semibold text-sm">DC Universe Packs</h3>
             </div>
-            <!-- Add more packs here -->
+            <!-- Pack 3 -->
+            <div class="scene-item movie-card group cursor-pointer">
+                <div class="relative overflow-hidden rounded-2xl aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1626814026160-2237a9ec8350?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                </div>
+                <h3 class="mt-3 font-semibold text-sm">Stranger Things Packs</h3>
+            </div>
+        </div>
+    </main>
+
+    <!-- MOVIE WATCH SECTION -->
+    <main id="movie-section" class="px-6 py-10" data-aos="fade-up">
+        <h2 class="text-3xl font-bold mb-8 border-l-4 border-purple-500 pl-4">Free Hindi Dubbed Movies</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <!-- Movie 1 -->
+            <div class="movie-item movie-card group cursor-pointer" onclick="openPlayer('Avatar 2', 'https://example.com/m1')">
+                <div class="relative overflow-hidden rounded-2xl aspect-[2/3]">
+                    <img src="https://m.media-amazon.com/images/M/MV5BYjRlMzYxNTctY2RjNC00ZWZmLWEwMDAtYTE1YzYxN2FmZTZmXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div>
+                </div>
+                <h3 class="mt-3 font-semibold text-sm">Avatar: The Way of Water</h3>
+                <p class="text-xs text-gray-500">Hindi Dubbed • HD</p>
+            </div>
+            <!-- More movies would go here -->
+        </div>
+    </main>
+
+    <!-- PLAYER MODAL (With 5 Servers) -->
+    <div id="player-modal" class="fixed inset-0 z-[60] hidden flex items-center justify-center p-4 bg-black/90">
+        <div class="w-full max-w-4xl glass p-6 relative">
+            <button onclick="closePlayer()" class="absolute top-4 right-4 text-2xl">&times;</button>
+            <h2 id="player-title" class="text-xl font-bold mb-4 text-center">Movie Name</h2>
+            
+            <!-- Video Area -->
+            <div class="bg-black aspect-video w-full rounded-xl flex items-center justify-center mb-4 border border-white/10">
+                <div class="text-center">
+                    <i class="fa fa-play text-4xl text-blue-500 mb-2"></i>
+                    <p class="text-sm text-gray-400">Loading Server...</p>
+                </div>
+            </div>
+
+            <!-- Server Selection -->
+            <div class="flex flex-wrap justify-center gap-3">
+                <button class="server-btn bg-blue-600 px-4 py-2 rounded text-xs font-bold">Server 1</button>
+                <button class="server-btn bg-white/10 px-4 py-2 rounded text-xs font-bold">Server 2</button>
+                <button class="server-btn bg-white/10 px-4 py-2 rounded text-xs font-bold">Server 3</button>
+                <button class="server-btn bg-white/10 px-4 py-2 rounded text-xs font-bold">Server 4</button>
+                <button class="server-btn bg-whiteTime for thinking is over. Stop thinking immediately. Now, directly provide the complete and coherent final answer. Do not include any self-checking, word count verification, or step explanations.Yeh raha tumhari requirement ke mutabiq bilkul "Udham" (Premium/High-End) website ka code. Ismein maine **Tailwind CSS** aur **AOS (Animate On Scroll)** ka use kiya hai taake design bilkul modern aur animation smooth lage.
+
+Ismein **Scene Packs**, **Free Hindi Movies**, **Multi-Server Player**, **Search Bar**, aur **Professional Collab Modal** sab kuch shamil hai.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-STREAM | Premium Cinema</title>
+    <!-- Google Fonts & Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Hover Animations */
+        .card-zoom img { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-zoom:hover img { transform: scale(1.1); }
+
+        .glow-btn {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+        .glow-btn:hover {
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #9333ea, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+
+        #scene-section, #movie-section { display: none; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto glass rounded-2xl px-6 py-3 flex justify-between items-center">
+            <div class="text-2xl font-extrabold tracking-tighter">X<span class="text-blue-500">STREAM</span></div>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
+                <button onclick="showHome()" class="hover:text-blue-400 transition">Home</button>
+                <button onclick="showScenePacks()" class="hover:text-blue-400 transition">Scene Packs</button>
+                <button onclick="showMovies()" class="hover:text-blue-400 transition">Free Movies</button>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="openCollab()" class="bg-blue-600 text-xs font-bold px-5 py-2 rounded-full glow-btn uppercase">Collab</button>
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=XPT" class="w-9 h-9 rounded-full border border-blue-500 shadow-lg shadow-blue-500/20" alt="DP">
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home-section" class="pt-40 pb-20 px-6 text-center" data-aos="zoom-out">
+        <h1 class="text-6xl md:text-8xl font-extrabold mb-6">Beyond <span class="gradient-text">Cinema.</span></h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10">High-Quality 4K Scene Packs & All Movies in Hindi Dubbed. Unmatched Premium Experience.</p>
+        
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <button onclick="showMovies()" class="bg-white text-black px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-500 hover:text-white transition duration-300">Watch Free Movies</button>
+            <button onclick="showScenePacks()" class="glass px-10 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition duration-300">Explore Scene Packs</button>
         </div>
     </section>
 
-    <!-- Free Movies Section -->
-    <section id="free-movies">
-        <h2>Free Movies</h2>
-        <input type="search" id="movie-search" placeholder="Search for a movie...">
-        <div class="movie-grid">
-            <!-- Example: Add more divs for different movies -->
-            <div class="movie">
-                <img src="movie1-poster.jpg" alt="Movie 1 Poster">
-                <h3>Movie 1 Title</h3>
-                <!-- Add play button here -->
+    <!-- SEARCH SECTION -->
+    <div class="px-6 max-w-2xl mx-auto mb-12" data-aos="fade-up">
+        <div class="relative">
+            <input type="text" id="searchInput" onkeyup="searchItem()" placeholder="Search movies or scene packs..." class="w-full bg-white/5 border border-white/10 rounded-full py-4 px-7 focus:outline-none focus:border-blue-500 transition text-lg">
+            <i class="fa fa-search absolute right-7 top-5 text-gray-500 text-xl"></i>
+        </div>
+    </div>
+
+    <!-- SCENE PACKS SECTION -->
+    <section id="scene-section" class="px-6 py-10 max-w-7xl mx-auto">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="text-4xl font-bold">Scene <span class="text-blue-500">Packs</span></h2>
+                <p class="text-gray-500">All movies clips in 4K Ultra HD</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8" id="sceneGrid">
+            <!-- Card 1 -->
+            <div class="scene-item card-zoom group cursor-pointer" onclick="openPlayer('Marvel All Packs', 'server1_link')">
+                <div class="relative aspect-[2/3] rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                    <span class="absolute bottom-3 left-3 bg-blue-600 text-[10px] px-2 py-1 rounded font-bold">4K ULTRA</span>
+                </div>
+                <h3 class="mt-4 font-semibold text-gray-200 group-hover:text-blue-400 transition">Marvel All Movies</h3>
+            </div>
+            <!-- Card 2 -->
+            <div class="scene-item card-zoom group cursor-pointer">
+                <div class="relative aspect-[2/3] rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                    <span class="absolute bottom-3 left-3 bg-red-600 text-[10px] px-2 py-1 rounded font-bold">4K ULTRA</span>
+                </div>
+                <h3 class="mt-4 font-semibold text-gray-200">DC Universe</h3>
+            </div>
+            <!-- Add more as needed -->
+        </div>
+    </section>
+
+    <!-- FREE MOVIES SECTION -->
+    <section id="movie-section" class="px-6 py-10 max-w-7xl mx-auto">
+        <div class="flex justify-between items-end mb-10">
+            <div>
+                <h2 class="text-4xl font-bold">Free <span class="text-purple-500">Movies</span></h2>
+                <p class="text-gray-500">Full HD ₹ Hindi Dubbed Only</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8" id="movieGrid">
+            <!-- Movie Card -->
+            <div class="movie-item card-zoom group cursor-pointer" onclick="openPlayer('Avatar: Way of Water', 'server_link')">
+                <div class="relative aspect-[2/3] rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="https://m.media-amazon.com/images/M/MV5BYjRlMzYxNTctY2RjNC00ZWZmLWEwMDAtYTE1YzYxN2FmZTZmXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_.jpg" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div>
+                </div>
+                <h3 class="mt-4 font-semibold text-gray-200 group-hover:text-purple-400 transition">Avatar 2</h3>
+                <p class="text-xs text-gray-500 font-medium">Hindi Dubbed • Full HD</p>
             </div>
             <!-- Add more movies here -->
         </div>
     </section>
 
-    <!-- Collaborate Section -->
-    <section id="collaborate">
-        <h2>Collaborate with Us</h2>
-        <p>Follow us on social media and send your collaboration requests!</p>
-        <button id="collab-btn">Collaboration Request</button>
-        <!-- Modal for collaboration request form -->
-        <div id="collab-modal" class="modal">
-            <!-- Form goes here -->
-            <form>
-                <label for="social-media">Social Media Profile:</label>
-                <input type="url" id="social-media" required><br><br>
-                <label for="followers">Number of Followers:</label>
-                <input type="number" id="followers" min="1000" required><br><br>
-                <!-- Add more fields as needed -->
-                <input type="submit" value="Send Request">
-            </form>
-        </div>
-    </section>
+    <!-- PLAYER MODAL -->
+    <div id="player-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/95">
+        <div class="w-full max-w-5xl glass rounded-3xl p-6 relative">
+            <button onclick="closePlayer()" class="absolute top-6 right-6 text-3xl hover:text-red-500">&times;</button>
+            <h2 id="player-title" class="text-2xl font-bold mb-6 text-center">Movie Name</h2>
+            
+            <!-- Video Display Area -->
+            <div class="relative aspect-video w-full bg-black rounded-2xl border border-white/10 overflow-hidden mb-6 flex items-center justify-center">
+                <div id="video-content" class="text-center">
+                    <i class="fas fa-play-circle text-6xl text-blue-500 mb-4"></i>
+                    <p class="text-gray-400">Switch server to start watching</p>
+                </div>
+            </div>
 
-    <!-- Footer Section -->
-    <footer>
-        &copy; 2024 Cinematic Video Editing. All rights reserved.
+            <!-- Multi-Server Switcher -->
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="switchServer(1)" class="server-btn bg-blue-600 px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-500">Server 1</button>
+                <button onclick="switchServer(2)" class="server-btn bg-white/10 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20">Server 2</button>
+                <button onclick="switchServer(3)" class="server-btn bg-white/10 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20">Server 3</button>
+                <button onclick="switchServer(4)" class="server-btn bg-white/10 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20">Server 4</button>
+                <button onclick="switchServer(5)" class="server-btn bg-white/10 px-6 py-2 rounded-full text-sm font-bold hover:bg-white/20">Server 5</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- COLLAB MODAL -->
+    <div id="collab-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="w-full max-w-md glass rounded-3xl p-8 text-center" data-aos="zoom-in">
+            <h2 class="text-3xl font-extrabold mb-2">Collab <span class="text-blue-500">With Us</span></h2>
+            <p class="text-gray-400 text-sm mb-8">Become a part of the X-Stream Team</p>
+            
+            <div class="text-left space-y-4 mb-8">
+                <div class="flex items-center gap-4 text-sm text-gray-300">
+                    <i class="fa fa-check-circle text-blue-500"></i> Follow my Social Media
+                </div>
+                <div class="flex items-center gap-4 text-sm text-gray-300">
+                    <i class="fa fa-check-circle text-blue-500"></i> 1,000+ Followers Minimum
+                </div>
+                <div class="flex items-center gap-4 text-sm text-gray-300">
+                    <i class="fa fa-check-circle text-blue-500"></i> Properly Edited Content
+                </div>
+                <div class="flex items-center gap-4 text-sm text-gray-300">
+                    <i class="fa fa-check-circle text-blue-500"></i> Original & HD Quality
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="closeCollab()" class="bg-white/10 py-3 rounded-xl font-semibold">Cancel</button>
+                <!-- Link this to your Instagram DM or WhatsApp -->
+                <a href="https://instagram.com/YOUR_USERNAME" target="_blank" class="bg-blue-600 py-3 rounded-xl font-bold glow-btn">Apply Now</a>
+            </div>
+            <button onclick="closeCollab()" class="mt-4 text-gray-500 text-xs underline">Close</button>
+        </div>
+    </div>
+
+    <!-- FOOTER / WORK STATS -->
+    <footer class="max-w-7xl mx-auto px-6 py-20 text-center">
+        <div class="glass p-10 rounded-3xl inline-block w-full max-w-2xl" data-aos="fade-up">
+            <h3 class="text-xl font-bold mb-4">My Work Quality</h3>
+            <div class="w-full bg-white/10 h-4 rounded-full overflow-hidden mb-2">
+                <div class="bg-gradient-to-r from-blue-500 to-purple-500 h-full w-[98%]"></div>
+            </div>
+            <div class="flex justify-between text-sm font-bold text-blue-400">
+                <span>Elite Quality</span>
+                <span>98%</span>
+            </div>
+            <p class="text-gray-500 text-xs mt-6">© 2026 XSTREAM Developed by XPT Team. All Rights Reserved.</p>
+        </div>
     </footer>
 
-    <!-- Script for modal and other interactions -->
-    <script src="script.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({duration: 800)
+
+        // Navigation Logic
+        function showHome() {
+            document.getElementById('home-section').style.display = 'block';
+            document.getElementById('scene-section').style.display = 'none';
+            document.getElementById('movie-section').style.display = 'none';
+            window.scrollTo(0,0);
+        }
+
+        function showScenePacks() {
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('scene-section').style.display = 'block';
+            document.getElementById('movie-section').style.display = 'none';
+            window.scrollTo(0,0);
+        }
+
+        function showMovies() {
+            document.getElementById('home-section').style.display = 'none';
+            document.getElementById('scene-section').style.display = 'none';
+            document.getElementById('movie-section').style.display = 'block';
+            window.scrollTo(0,0);
+        }
+
+        // Player Logic
+        function openPlayer(title, server) {
+            document.getElementById('player-title').innerText = title;
+            document.getElementById('player-modal').classList.remove('hidden');
+            document.getElementById('player-modal').classList.add('flex');
+        }
+
+        function closePlayer() {
+            document.getElementById('player-modal').classList.add('hidden');
+            document.getElementById('player-modal').classList.remove('flex');
+        }
+
+        function switchServer(num) {
+            const content = document.getElementById('video-content');
+            content.innerHTML = `<p class="text-blue-400 animate-pulse">Connecting to Server ${num}...</p>`;
+            setTimeout(() => {
+                content.innerHTML = `<div class="text-center"><i class="fas fa-play-circle text-6xl text-green-500 mb-4"></i><p class="text-white font-bold">Server ${num} Active! <br> <span class="text-sm text-gray-400">Video is now playing in Full HD</span></p></div>`;
+            }, 1500);
+        }
+
+        // Collab Logic
+        function openCollab() {
+            document.getElementById('collab-modal').classList.remove('hidden');
+        }
+
+        function closeCollab() {
+            document.getElementById('collab-modal').classList.add('hidden');
+        }
+
+        // Search Logic
+        function searchItem() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let scenes = document.getElementsByClassName('scene-item');
+            let movies = document.getElementsByClassName('movie-item');
+
+            for (let i = 0; i < scenes.length; i++) {
+                let text = scenes[i].innerText.toLowerCase();
+                scenes[i].style.display = text.includes(input) ? "" : "none";
+            }
+            for (let i = 0; i < movies.length; i++) {
+                let text = movies[i].innerText.toLowerCase();
+                movies[i].style.display = text.includes(input) ? "" : "none";
+            }
+        }
+    </script>
 </body>
 </html>
-
-body {
-    font-family: Arial, sans-serif;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 1em;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-}
-
-nav li {
-    display: inline;
-}
-
-nav li a {
-    color: #fff;
-}
-
-#hero {
-    background-image: url('background.jpg');
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#hero button {
-    margin: 10px;
-}
-
-.scene-pack-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.scene-pack {
-    margin: 10px;
-}
-
-.scene-pack img {
-    width: 100%;
-}
-
-.movie-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.movie {
-    margin: 10px;
-}
-
-.movie img {
-    width: 100%;
-}
-
-#collab-modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-document.getElementById('scene-pack-btn').addEventListener('click', function() {
-    // Open scene packs section
-});
-
-document.getElementById('free-movie-btn').addEventListener('click', function() {
-    // Open free movies section
-});
-
-document.getElementById('collab-btn').addEventListener('click', function() {
-    var modal = document.getElementById("collab-modal");
-    
-    modal.style.display = "block";
-});
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    var modal = document.getElementById("collab-modal");
-    
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
