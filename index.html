@@ -3,773 +3,505 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ROBIN.EDIT — Beyond Ordinary</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROBIN.EDIT | Cinematic Universe</title>
 
 <style>
-:root {
-  --blue: #168bff;
-  --cyan: #65e0ff;
-  --bg: #03050b;
-  --panel: rgba(9, 18, 36, .76);
-  --muted: #8c9bb5;
-}
-
-* { margin:0; padding:0; box-sizing:border-box; }
-
-html { scroll-behavior:smooth; }
-
-body {
-  background:var(--bg);
-  color:#fff;
-  font-family:Inter, sans-serif;
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:#02050b;
+  color:white;
+  font-family:Arial,sans-serif;
   overflow-x:hidden;
 }
-
-a { color:inherit; text-decoration:none; }
-button,input { font:inherit; }
-
-/* Ambient background */
-.ambient {
-  position:fixed;
-  inset:0;
-  z-index:-5;
-  background:
-    radial-gradient(ellipse at 20% 20%,#07356b55,transparent 45%),
-    radial-gradient(ellipse at 80% 70%,#004b8b33,transparent 45%),
-    #03050b;
+:root{
+  --blue:#00aaff;
+  --light:#55ccff;
+  --dark:#02050b;
 }
-
-.ambient::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:
-    linear-gradient(#168bff08 1px,transparent 1px),
-    linear-gradient(90deg,#168bff08 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:linear-gradient(to bottom,black,transparent 80%);
-}
-
-#particles {
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-}
-
-/* Navigation */
-nav {
-  position:fixed;
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+section{padding:85px 7%;scroll-margin-top:75px}
+.navbar{
+  height:75px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 7%;
+  background:rgba(0,5,14,.93);
+  border-bottom:1px solid #087dbb55;
+  position:sticky;
   top:0;
-  left:0;
-  right:0;
   z-index:100;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 7%;
-  background:#03050bd9;
-  border-bottom:1px solid #168bff20;
-  backdrop-filter:blur(18px);
+  backdrop-filter:blur(15px);
 }
-
-.logo {
-  font-family:Orbitron,sans-serif;
-  font-size:19px;
-  font-weight:900;
-  letter-spacing:2px;
+.brand{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:900}
+.logo{
+  width:45px;height:45px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#00c8ff,#003b8d);
+  border:2px solid #75dfff;
+  box-shadow:0 0 20px #008cff;
+  font-size:26px;font-weight:900;
 }
-
-.logo span { color:var(--blue); }
-
-.navlinks {
-  display:flex;
-  align-items:center;
-  gap:28px;
-  font-size:11px;
-  font-weight:700;
-  letter-spacing:1.5px;
-  color:#a9b7cc;
-}
-
-.navlinks a { transition:.25s; }
-.navlinks a:hover { color:var(--cyan); }
-
-.nav-cta {
-  border:1px solid #168bff66;
-  padding:11px 16px;
-  border-radius:3px;
-  color:white !important;
-}
-
-/* Hero */
-.hero {
-  min-height:100vh;
-  position:relative;
-  display:flex;
-  align-items:center;
-  padding:130px 8% 90px;
-  overflow:hidden;
-}
-
-.hero-art {
-  position:absolute;
-  inset:0;
-  z-index:-2;
-  background:
-    linear-gradient(90deg,#03050b 5%,#03050bce 40%,#03050b44 75%,#03050b99),
-    linear-gradient(0deg,#03050b 0%,transparent 35%,#03050b55),
-    url("luffy-bg.jpg") center 25% / cover no-repeat;
-  opacity:.78;
-  animation:artReveal 1.5s ease both;
-}
-
-.hero-art::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(ellipse at 75% 50%,#168bff20,transparent 50%);
-}
-
-@keyframes artReveal {
-  from { opacity:0; transform:scale(1.06); }
-  to { opacity:.78; transform:scale(1); }
-}
-
-.hero-content {
-  max-width:720px;
-  animation:rise .9s ease both;
-}
-
-@keyframes rise {
-  from { opacity:0; transform:translateY(30px); }
-  to { opacity:1; transform:translateY(0); }
-}
-
-.status {
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:9px 14px;
-  border:1px solid #168bff44;
-  background:#06152bbd;
-  color:#a9d9ff;
-  font-size:10px;
-  letter-spacing:2px;
-  border-radius:30px;
-  margin-bottom:28px;
-}
-
-.status i {
-  width:7px;
-  height:7px;
-  background:#4bffb0;
-  border-radius:50%;
-  box-shadow:0 0 12px #4bffb0;
-}
-
-.hero h1 {
-  font-family:Orbitron,sans-serif;
-  font-size:clamp(48px,9vw,105px);
-  line-height:1.05;
-  letter-spacing:-3px;
-  font-weight:900;
-}
-
-.hero h1 span {
-  color:var(--blue);
-  text-shadow:0 0 35px #168bff88;
-}
-
-.hero h2 {
-  margin-top:20px;
-  font-size:clamp(13px,2vw,18px);
-  letter-spacing:6px;
-  color:#b5c9e4;
-}
-
-.hero p {
-  max-width:530px;
-  color:#9baac1;
-  line-height:1.9;
-  font-size:14px;
-  margin:25px 0 32px;
-}
-
-.profile-line {
-  display:flex;
-  align-items:center;
-  gap:13px;
-  margin-bottom:25px;
-}
-
-.profile {
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid var(--blue);
-  box-shadow:0 0 18px #168bff55;
-}
-
-.profile-line strong {
-  display:block;
-  font-size:12px;
-  letter-spacing:1px;
-}
-
-.profile-line small {
-  color:var(--muted);
-  font-size:10px;
-  display:block;
-  margin-top:5px;
-}
-
-.actions {
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px;
-}
-
-.btn {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:16px 22px;
-  border:1px solid #168bff55;
-  background:#071326cc;
-  color:#fff;
-  border-radius:3px;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1.5px;
-  cursor:pointer;
-  transition:all .3s;
-}
-
-.btn:hover {
-  transform:translateY(-3px);
-  border-color:var(--cyan);
-  box-shadow:0 8px 30px #168bff22;
-}
-
-.btn.primary {
-  background:var(--blue);
-  border-color:var(--blue);
-  box-shadow:0 0 25px #168bff33;
-}
-
-.btn.primary:hover {
-  background:#40a4ff;
-  box-shadow:0 0 35px #168bff66;
-}
-
-.hero-bottom {
-  position:absolute;
-  bottom:30px;
-  left:8%;
-  right:8%;
-  display:flex;
-  justify-content:space-between;
-  color:#52647f;
-  font-size:9px;
-  letter-spacing:3px;
-}
-
-/* Search */
-.search-section {
-  padding:0 8% 45px;
-  margin-top:-15px;
-  position:relative;
-}
-
-.searchbox {
-  max-width:760px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:9px;
-  background:#071326dd;
-  border:1px solid #168bff44;
-  box-shadow:0 15px 60px #0008;
-}
-
-.searchbox input {
-  flex:1;
-  min-width:0;
-  background:transparent;
-  color:white;
-  border:0;
-  outline:0;
-  padding:12px;
-  font-size:13px;
-}
-
-.searchbox input::placeholder { color:#61718a; }
-
-/* Sections */
-section.content {
-  padding:100px 8%;
-  scroll-margin-top:80px;
-}
-
-.section-head {
-  text-align:center;
-  margin-bottom:50px;
-}
-
-.kicker {
-  color:var(--cyan);
-  font-family:Orbitron,sans-serif;
-  font-size:10px;
-  letter-spacing:4px;
-  margin-bottom:16px;
-}
-
-.section-head h2 {
-  font-family:Orbitron,sans-serif;
-  font-size:clamp(27px,5vw,46px);
-  letter-spacing:1px;
-}
-
-.section-head p {
-  max-width:550px;
-  margin:18px auto 0;
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.8;
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:20px;
-  max-width:1150px;
-  margin:auto;
-}
-
-.card {
-  position:relative;
-  min-height:270px;
-  padding:28px;
-  overflow:hidden;
-  border:1px solid #168bff24;
-  background:linear-gradient(145deg,#0a1830d9,#050a14e8);
-  transition:.35s;
-}
-
-.card::before {
-  content:"";
-  position:absolute;
-  top:0;
-  left:0;
-  width:0;
-  height:2px;
-  background:var(--cyan);
-  transition:.4s;
-}
-
-.card:hover {
-  transform:translateY(-7px);
-  border-color:#168bff88;
-  box-shadow:0 20px 60px #0006,0 0 30px #168bff0d;
-}
-
-.card:hover::before { width:100%; }
-
-.card-num {
-  color:#4b8fc9;
-  font-family:Orbitron,sans-serif;
-  font-size:10px;
-  letter-spacing:2px;
-}
-
-.card h3 {
-  font-size:20px;
-  margin:28px 0 12px;
-}
-
-.card p {
-  color:#8c9bb5;
-  font-size:12px;
-  line-height:1.8;
-}
-
-.card .btn { margin-top:25px; }
-
-/* Artwork cards */
-.art-card {
-  min-height:340px;
+.brand span{color:var(--blue)}
+.menu{display:flex;gap:25px;align-items:center}
+.menu a{font-size:12px;font-weight:bold;letter-spacing:1px;color:#ccc}
+.menu a:hover{color:var(--light)}
+.hamburger{display:none;background:none;border:0;color:white;font-size:30px}
+.hero{
+  min-height:760px;
+  padding:75px 7%;
   display:flex;
   flex-direction:column;
-  justify-content:flex-end;
-  background-size:cover;
-  background-position:center;
-  border:1px solid #168bff33;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  background:
+  radial-gradient(ellipse at 50% 45%,#004c8c55,transparent 55%),
+  linear-gradient(180deg,#02050b,#050d19 75%,#02050b);
 }
-
-.art-card::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(0deg,#03050bf2,transparent 80%);
+.hero:before{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:repeating-linear-gradient(115deg,transparent 0 100px,#008cff08 101px 103px);
+ pointer-events:none;
 }
-
-.art-card > * { position:relative; z-index:1; }
-
-.art-card h3 { font-family:Orbitron,sans-serif; }
-
-/* Collaboration */
-.collab-bg {
-  background:radial-gradient(ellipse at center,#06244a66,transparent 70%);
+.hero-logo{
+ width:145px;height:145px;
+ border-radius:50%;
+ display:grid;place-items:center;
+ font-size:85px;font-weight:900;
+ color:white;
+ border:5px solid var(--blue);
+ background:radial-gradient(circle,#07548b,#02050b);
+ box-shadow:0 0 25px var(--blue),0 0 90px #0077ff66;
+ margin-bottom:30px;
+ position:relative;
 }
-
-.requirements {
-  max-width:780px;
-  margin:auto;
-  padding:clamp(25px,5vw,50px);
-  border:1px solid #168bff44;
-  background:#050c19e8;
-  box-shadow:0 20px 80px #0005;
+.hero small{color:var(--light);letter-spacing:6px;font-weight:bold}
+.hero h1{font-size:clamp(48px,10vw,95px);font-weight:1000;margin:15px 0}
+.hero h1 span{color:var(--blue)}
+.hero h2{font-size:clamp(18px,4vw,34px);margin-bottom:20px}
+.hero p{max-width:720px;color:#aaa;font-size:17px;line-height:1.8}
+.buttons{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin-top:35px}
+.btn{
+ padding:17px 35px;
+ border-radius:50px;
+ border:1px solid var(--blue);
+ font-weight:bold;
+ letter-spacing:2px;
+ background:transparent;
+ color:white;
+ transition:.3s;
 }
-
-.requirements h3 {
-  font-family:Orbitron,sans-serif;
-  font-size:17px;
-  letter-spacing:2px;
-  margin-bottom:25px;
+.btn.primary{background:var(--blue);box-shadow:0 0 25px #008cff66}
+.btn:hover{background:#0077cc;box-shadow:0 0 30px var(--blue);transform:translateY(-3px)}
+.tags{margin-top:65px;color:#657d93;letter-spacing:4px;line-height:3}
+.tags span{margin:0 12px}
+.section-title{text-align:center;margin-bottom:45px}
+.section-title small{color:var(--blue);letter-spacing:5px;font-weight:bold}
+.section-title h2{font-size:clamp(30px,6vw,48px);margin-top:12px}
+.section-title p{color:#888;margin-top:12px}
+.blue{color:var(--blue)}
+.cards{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:22px;
 }
-
-.requirements li {
-  list-style:none;
-  display:flex;
-  gap:14px;
-  padding:17px 0;
-  border-bottom:1px solid #168bff18;
-  color:#aebdd2;
-  font-size:13px;
-  line-height:1.7;
+.card{
+ background:linear-gradient(145deg,#101d2c,#050a12);
+ border:1px solid #17628b66;
+ border-radius:17px;
+ overflow:hidden;
+ transition:.3s;
 }
-
-.requirements li span {
-  color:var(--cyan);
+.card:hover{transform:translateY(-7px);border-color:var(--blue);box-shadow:0 0 25px #008cff22}
+.card-img{
+ height:145px;
+ display:grid;place-items:center;
+ background:radial-gradient(circle,#07538a,#07101d 70%);
+ font-size:42px;
 }
-
-.requirements .actions {
-  margin-top:30px;
+.card-body{padding:20px}
+.card h3{margin-bottom:10px}
+.card p{color:#999;font-size:13px;line-height:1.7}
+.card button,.card .action{
+ display:inline-block;
+ margin-top:17px;
+ padding:11px 17px;
+ border:1px solid var(--blue);
+ background:transparent;
+ color:white;
+ border-radius:25px;
+ font-size:11px;
+ font-weight:bold;
 }
-
-/* Footer */
-footer {
-  padding:35px 8%;
-  border-top:1px solid #168bff20;
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  color:#52647f;
-  font-size:10px;
-  letter-spacing:2px;
+.filters{
+ display:flex;justify-content:center;gap:10px;
+ flex-wrap:wrap;margin-bottom:30px
 }
-
-footer strong { color:var(--blue); }
-
-/* Reveal on scroll */
-.reveal {
-  opacity:0;
-  transform:translateY(25px);
-  transition:opacity .7s,transform .7s;
+.filters button{
+ padding:10px 17px;border:1px solid #155a83;
+ border-radius:30px;background:#071321;color:white
 }
-
-.reveal.visible {
-  opacity:1;
-  transform:translateY(0);
+.filters button.active,.filters button:hover{background:var(--blue)}
+.hidden{display:none!important}
+.player{
+ width:100%;max-width:850px;
+ margin:35px auto 0;
+ padding:15px;background:#071321;
+ border:1px solid #087ab7;border-radius:15px;
 }
-
-@media(max-width:850px) {
-  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .navlinks { gap:14px; }
+video{width:100%;max-height:460px;background:black}
+.player p{color:#aaa;font-size:13px;margin-top:10px}
+.collab{
+ text-align:center;
+ background:radial-gradient(ellipse at center,#07335b,#02050b 70%);
+ border-top:1px solid #006ba9;
+ border-bottom:1px solid #006ba9;
 }
-
-@media(max-width:600px) {
-  nav { padding:17px 5%; }
-  .logo { font-size:15px; }
-  .navlinks { gap:10px; font-size:9px; }
-  .nav-cta { display:none; }
-  .hero { padding:130px 6% 100px; }
-  .hero-art {
-    background:
-      linear-gradient(90deg,#03050bd9,#03050b77),
-      linear-gradient(0deg,#03050b,transparent 70%),
-      url("luffy-bg.jpg") 60% center/cover no-repeat;
-  }
-  .hero h1 { letter-spacing:-2px; }
-  .hero h2 { letter-spacing:3px; }
-  .hero-bottom { font-size:8px; }
-  .grid { grid-template-columns:1fr; }
-  section.content { padding:75px 6%; }
-  .search-section { padding:0 6% 30px; }
-  .searchbox { gap:5px; }
-  .searchbox .btn { padding:14px; }
-  footer { flex-direction:column; text-align:center; }
+.requirements{
+ max-width:650px;margin:35px auto;
+ text-align:left;
+ background:#061321;
+ border:1px solid #12628d;
+ border-radius:15px;
+ padding:28px;
+}
+.requirements li{
+ list-style:none;padding:13px 0;
+ border-bottom:1px solid #16344c;
+ color:#ddd;font-size:14px;
+}
+.requirements li:before{content:"✓";color:var(--blue);font-weight:bold;margin-right:12px}
+.note{color:#9bb3c5;font-size:13px;margin-top:18px}
+.work-card .card-img{height:180px}
+.rating{margin-top:17px;color:var(--light);font-weight:bold;font-size:12px}
+.bar{height:7px;background:#172738;border-radius:10px;margin-top:9px;overflow:hidden}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,#006aff,#50d9ff);border-radius:10px}
+footer{
+ text-align:center;padding:45px 15px;
+ background:#01040a;border-top:1px solid #0875aa55;
+ color:#778899;font-size:13px;line-height:2
+}
+.socials{margin:18px;display:flex;gap:20px;justify-content:center;color:var(--light)}
+@media(max-width:700px){
+ .navbar{padding:0 5%}
+ .hamburger{display:block}
+ .menu{
+  display:none;position:absolute;top:74px;left:0;width:100%;
+  background:#050d18;padding:25px;
+  flex-direction:column;border-bottom:1px solid var(--blue)
+ }
+ .menu.open{display:flex}
+ section{padding:65px 5%}
+ .hero{min-height:730px;padding:65px 5%}
+ .hero p{font-size:15px}
+ .hero-logo{width:125px;height:125px;font-size:72px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="ambient"></div>
-<canvas id="particles"></canvas>
-
-<nav>
-  <a href="#home" class="logo">ROBIN<span>.</span>EDIT</a>
-  <div class="navlinks">
-    <a href="#work">WORK</a>
-    <a href="#packs">PACKS</a>
-    <a href="#collab">COLLAB</a>
-    <a href="#collab" class="nav-cta">LET'S TALK ↗</a>
-  </div>
-</nav>
-
-<header class="hero" id="home">
-  <div class="hero-art"></div>
-
-  <div class="hero-content">
-    <div class="status"><i></i> CREATIVE MODE: ACTIVE</div>
-
-    <div class="profile-line">
-      <img src="robin.png" class="profile" alt="Robin">
-      <div>
-        <strong>ROBIN.EDIT</strong>
-        <small>VIDEO EDITOR / DIGITAL CREATOR</small>
-      </div>
-    </div>
-
-    <h1>BEYOND<br>ORDINARY<span>.</span></h1>
-    <h2>CREATE. EDIT. INSPIRE.</h2>
-
-    <p>
-      I turn iconic scenes into cinematic experiences.
-      Welcome to my world of anime, dark heroes,
-      powerful edits and visual storytelling.
-    </p>
-
-    <div class="actions">
-      <a href="#work" class="btn primary">EXPLORE MY WORK ↗</a>
-      <a href="#packs" class="btn">DISCOVER SCENE PACKS ↓</a>
-    </div>
-  </div>
-
-  <div class="hero-bottom">
-    <span>ANIME × CINEMA × ART</span>
-    <span>SCROLL TO EXPLORE ↓</span>
-  </div>
+<!-- NAVIGATION -->
+<header class="navbar">
+ <a href="#home" class="brand">
+  <div class="logo">R</div>
+  ROBIN<span>.EDIT</span>
+ </a>
+ <button class="hamburger" onclick="toggleMenu()">☰</button>
+ <nav class="menu" id="menu">
+  <a href="#home">HOME</a>
+  <a href="#work">MY WORK</a>
+  <a href="#packs">SCENE PACKS</a>
+  <a href="#movies">FREE MOVIES</a>
+  <a href="#collab">COLLAB</a>
+ </nav>
 </header>
 
-<div class="search-section" id="search-area">
-  <div class="searchbox">
-    <input id="search" type="search"
-      placeholder="Search edits, anime, scene packs...">
-    <button class="btn primary" id="searchBtn">SEARCH ↗</button>
-  </div>
-</div>
-
-<section class="content reveal" id="work">
-  <div class="section-head">
-    <div class="kicker">01 — THE PORTFOLIO</div>
-    <h2>MY CREATIVE UNIVERSE</h2>
-    <p>Every frame has a story. Every edit has an identity.</p>
-  </div>
-
-  <div class="grid">
-    <article class="card art-card"
-      style="background-image:linear-gradient(0deg,#03050b,transparent),url('wolverine-bg.jpg')"
-      data-search="marvel wolverine dark heroes">
-      <div class="card-num">01 / MARVEL</div>
-      <h3>DARK HEROES</h3>
-      <p>Wolverine. Antiheroes. Unforgettable moments.</p>
-      <a href="#collab" class="btn">VIEW PROJECTS ↗</a>
-    </article>
-
-    <article class="card art-card"
-      style="background-image:linear-gradient(0deg,#03050b,transparent),url('luffy-bg.jpg')"
-      data-search="anime luffy one piece">
-      <div class="card-num">02 / ANIME</div>
-      <h3>ANIME WORLD</h3>
-      <p>Iconic characters. Legendary scenes.</p>
-      <a href="#collab" class="btn">VIEW PROJECTS ↗</a>
-    </article>
-
-    <article class="card"
-      data-search="cinematic movie edits">
-      <div class="card-num">03 / CINEMA</div>
-      <h3>CINEMATIC EDITS</h3>
-      <p>Visual storytelling through rhythm, color and emotion.</p>
-      <a href="#collab" class="btn">COMING SOON ↗</a>
-    </article>
-  </div>
+<!-- HERO -->
+<section class="hero" id="home">
+ <div class="hero-logo">R</div>
+ <small>@ ROBIN.EDIT • VIDEO EDITOR</small>
+ <h1>ROBIN<span>.</span>EDIT</h1>
+ <h2>A CINEMATIC VIDEO EDITOR</h2>
+ <p>
+ 🎬 Cinema • Edits • Stories — Creating emotions through
+ cinematic transitions, powerful scenes and unforgettable edits.
+ Marvel, Anime, Indian Cinema and more.
+ </p>
+ <div class="buttons">
+  <a class="btn" href="#work">EXPLORE MY WORK</a>
+  <a class="btn primary" href="#collab">COLLAB WITH ME</a>
+ </div>
+ <div class="tags">
+  <span>MARVEL</span> • <span>DC</span> •
+  <span>ANIME</span> • <span>INDIAN CINEMA</span>
+ </div>
 </section>
 
-<section class="content reveal" id="packs">
-  <div class="section-head">
-    <div class="kicker">02 — THE RESOURCE VAULT</div>
-    <h2>SCENE PACKS</h2>
-    <p>High-quality scenes for creators. New drops coming soon.</p>
+<!-- WORK -->
+<section id="work">
+ <div class="section-title">
+  <small>MY CREATIONS</small>
+  <h2>VIEW MY <span class="blue">WORK</span></h2>
+  <p>My editing portfolio and creative skills.</p>
+ </div>
+
+ <div class="cards">
+  <div class="card work-card">
+   <div class="card-img">🎬</div>
+   <div class="card-body">
+    <h3>Marvel Edits</h3>
+    <p>Action, cinematic effects and transitions.</p>
+    <div class="rating">Creator quality rating: 95%</div>
+    <div class="bar"><span style="width:95%"></span></div>
+   </div>
   </div>
 
-  <div class="grid">
-    <article class="card" data-search="anime scene packs">
-      <div class="card-num">PACK 001</div>
-      <h3>ANIME ARCHIVE</h3>
-      <p>Anime scenes for your next edit.</p>
-      <a href="#packs" class="btn">COMING SOON</a>
-    </article>
-
-    <article class="card" data-search="marvel superhero scene packs">
-      <div class="card-num">PACK 002</div>
-      <h3>HERO ARCHIVE</h3>
-      <p>Superhero and action scene resources.</p>
-      <a href="#packs" class="btn">COMING SOON</a>
-    </article>
-
-    <article class="card" data-search="movie cinematic scene packs">
-      <div class="card-num">PACK 003</div>
-      <h3>CINEMA ARCHIVE</h3>
-      <p>Cinematic scenes and visual inspiration.</p>
-      <a href="#packs" class="btn">COMING SOON</a>
-    </article>
+  <div class="card work-card">
+   <div class="card-img">⚡</div>
+   <div class="card-body">
+    <h3>Anime Edits</h3>
+    <p>Anime battles, velocity and powerful effects.</p>
+    <div class="rating">Creator quality rating: 92%</div>
+    <div class="bar"><span style="width:92%"></span></div>
+   </div>
   </div>
+
+  <div class="card work-card">
+   <div class="card-img">❤️</div>
+   <div class="card-body">
+    <h3>Romantic Edits</h3>
+    <p>Emotional storytelling and smooth transitions.</p>
+    <div class="rating">Creator quality rating: 90%</div>
+    <div class="bar"><span style="width:90%"></span></div>
+   </div>
+  </div>
+
+  <div class="card work-card">
+   <div class="card-img">🔥</div>
+   <div class="card-body">
+    <h3>Indian Cinema</h3>
+    <p>Powerful scenes and cinematic storytelling.</p>
+    <div class="rating">Creator quality rating: 94%</div>
+    <div class="bar"><span style="width:94%"></span></div>
+   </div>
+  </div>
+ </div>
+ <p class="note" style="text-align:center">
+  Sample self-assessed percentages — replace these with your actual ratings.
+ </p>
 </section>
 
-<section class="content reveal" id="watch">
-  <div class="section-head">
-    <div class="kicker">03 — THE MOVIE EXPERIENCE</div>
-    <h2>FIND YOUR NEXT MOVIE</h2>
-    <p>Discover where movies are available to stream.</p>
+<!-- SCENE PACKS -->
+<section id="packs" style="background:#050b14">
+ <div class="section-title">
+  <small>DOWNLOAD LIBRARY</small>
+  <h2>4K <span class="blue">SCENE PACKS</span></h2>
+  <p>Explore cinematic scenes and editing resources.</p>
+ </div>
+
+ <div class="filters" id="packFilters">
+  <button class="active" onclick="filterPacks('all',this)">ALL</button>
+  <button onclick="filterPacks('marvel',this)">MARVEL</button>
+  <button onclick="filterPacks('dc',this)">DC</button>
+  <button onclick="filterPacks('series',this)">SERIES</button>
+  <button onclick="filterPacks('anime',this)">ANIME</button>
+  <button onclick="filterPacks('indian',this)">INDIAN CINEMA</button>
+ </div>
+
+ <div class="cards" id="packGrid">
+  <div class="card pack" data-category="marvel">
+   <div class="card-img">🦸</div>
+   <div class="card-body">
+    <h3>Marvel Scene Packs</h3>
+    <p>Licensed Marvel editing resources and scene collections.</p>
+    <a class="action" href="packs/marvel.zip">DOWNLOAD PACK</a>
+   </div>
   </div>
-  <div class="actions" style="justify-content:center">
-    <a class="btn primary" href="https://www.justwatch.com/"
-       target="_blank" rel="noopener">EXPLORE MOVIES ↗</a>
+
+  <div class="card pack" data-category="dc">
+   <div class="card-img">🦇</div>
+   <div class="card-body">
+    <h3>DC Scene Packs</h3>
+    <p>Authorized DC cinematic editing resources.</p>
+    <a class="action" href="packs/dc.zip">DOWNLOAD PACK</a>
+   </div>
   </div>
+
+  <div class="card pack" data-category="series">
+   <div class="card-img">📺</div>
+   <div class="card-body">
+    <h3>Stranger Things</h3>
+    <p>Authorized series editing resources.</p>
+    <a class="action" href="packs/stranger-things.zip">DOWNLOAD PACK</a>
+   </div>
+  </div>
+
+  <div class="card pack" data-category="anime">
+   <div class="card-img">⚔️</div>
+   <div class="card-body">
+    <h3>Anime Scene Packs</h3>
+    <p>Anime editing resources and original effects.</p>
+    <a class="action" href="packs/anime.zip">DOWNLOAD PACK</a>
+   </div>
+  </div>
+
+  <div class="card pack" data-category="indian">
+   <div class="card-img">🎥</div>
+   <div class="card-body">
+    <h3>Indian Cinema</h3>
+    <p>Authorized Indian cinema editing resources.</p>
+    <a class="action" href="packs/indian.zip">DOWNLOAD PACK</a>
+   </div>
+  </div>
+ </div>
+ <p class="note" style="text-align:center">
+  Add your own or licensed 4K ZIP files to the packs folder.
+ </p>
 </section>
 
-<section class="content collab-bg reveal" id="collab">
-  <div class="section-head">
-    <div class="kicker">04 — LET'S CREATE</div>
-    <h2>COLLABORATION</h2>
-    <p>Have the vision? Meet the requirements and let's make something great.</p>
+<!-- MOVIES -->
+<section id="movies">
+ <div class="section-title">
+  <small>ENTERTAINMENT ZONE</small>
+  <h2>FREE <span class="blue">MOVIES</span></h2>
+  <p>Hindi Dubbed • Full HD • Watch on this website</p>
+ </div>
+
+ <div class="filters">
+  <button class="active">ALL MOVIES</button>
+  <button>HINDI DUBBED</button>
+  <button>HD</button>
+ </div>
+
+ <div class="cards">
+  <div class="card">
+   <div class="card-img">🎬</div>
+   <div class="card-body">
+    <h3>Movie 01</h3>
+    <p>Hindi Dubbed • Full HD</p>
+    <button onclick="playMovie('media/movies/movie01.mp4','Movie 01')">
+     WATCH NOW
+    </button>
+   </div>
   </div>
 
-  <div class="requirements">
-    <h3>COLLABORATION REQUIREMENTS</h3>
-    <ul>
-      <li><span>✦</span> You must follow my social media profile.</li>
-      <li><span>✦</span> You must have more than 1,000 followers.</li>
-      <li><span>✦</span> Your videos must be properly edited and presented.</li>
-      <li><span>✦</span> Your content must be original, not copied.</li>
-      <li><span>✦</span> Your videos must be in HD quality.</li>
-      <li><span>✦</span> Views are not required. Quality and originality matter most.</li>
-    </ul>
-    <div class="actions">
-      <a href="https://instagram.com/" class="btn primary"
-         target="_blank" rel="noopener">REQUEST A COLLAB ↗</a>
-    </div>
+  <div class="card">
+   <div class="card-img">🍿</div>
+   <div class="card-body">
+    <h3>Movie 02</h3>
+    <p>Hindi Dubbed • Full HD</p>
+    <button onclick="playMovie('media/movies/movie02.mp4','Movie 02')">
+     WATCH NOW
+    </button>
+   </div>
   </div>
+
+  <div class="card">
+   <div class="card-img">🎞️</div>
+   <div class="card-body">
+    <h3>Movie 03</h3>
+    <p>Hindi Dubbed • Full HD</p>
+    <button onclick="playMovie('media/movies/movie03.mp4','Movie 03')">
+     WATCH NOW
+    </button>
+   </div>
+  </div>
+ </div>
+
+ <div class="player" id="moviePlayer" style="display:none">
+  <h3 id="movieTitle">Now Playing</h3>
+  <video id="video" controls playsinline></video>
+  <p>Only authorized or public-domain movies should be hosted here.</p>
+ </div>
 </section>
 
+<!-- COLLAB -->
+<section class="collab" id="collab">
+ <div class="section-title">
+  <small>WORK WITH ROBIN</small>
+  <h2>LET'S <span class="blue">COLLAB</span></h2>
+  <p>Want to become a part of the ROBIN.EDIT community?</p>
+ </div>
+
+ <div class="requirements">
+  <h3 style="color:#55ccff;margin-bottom:15px">COLLAB REQUIREMENTS</h3>
+  <ul>
+   <li>You must follow my social media profile.</li>
+   <li>You must have more than 1,000 followers.</li>
+   <li>Your videos must be properly edited and presented.</li>
+   <li>Your content must be original, not copied.</li>
+   <li>Your videos must be in HD quality.</li>
+  </ul>
+  <p class="note">
+   Views are not required. Quality and originality matter most.
+  </p>
+ </div>
+
+ <a class="btn primary" id="dmButton"
+ href="https://ig.me/m/YOUR_INSTAGRAM_USERNAME"
+ target="_blank">
+ REQUEST A COLLAB →
+ </a>
+ <p class="note">Click above to message ROBIN directly on Instagram.</p>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <span>© 2026 <strong>ROBIN.EDIT</strong></span>
-  <span>BUILT FOR THE LOVE OF EDITING</span>
+ <div class="brand" style="justify-content:center">
+  <div class="logo">R</div> ROBIN<span style="color:#00aaff">.EDIT</span>
+ </div>
+ <p>Creating emotions, one edit at a time.</p>
+ <div class="socials">
+  <a href="https://instagram.com/YOUR_INSTAGRAM_USERNAME">INSTAGRAM</a>
+  <a href="#work">MY WORK</a>
+  <a href="#collab">COLLAB</a>
+ </div>
+ <p>© 2026 ROBIN.EDIT • All Rights Reserved</p>
 </footer>
 
 <script>
-/* Search cards */
-const searchInput = document.getElementById("search");
-const cards = document.querySelectorAll("[data-search]");
-
-function searchItems() {
-  const query = searchInput.value.toLowerCase().trim();
-
-  cards.forEach(card => {
-    const text = (
-      card.innerText + " " + card.dataset.search
-    ).toLowerCase();
-
-    card.style.display = text.includes(query) ? "" : "none";
-  });
-
-  document.getElementById("work").scrollIntoView({
-    behavior:"smooth"
-  });
+function toggleMenu(){
+ document.getElementById("menu").classList.toggle("open");
 }
-
-document.getElementById("searchBtn")
-  .addEventListener("click", searchItems);
-
-searchInput.addEventListener("keydown", event => {
-  if (event.key === "Enter") searchItems();
+document.querySelectorAll(".menu a").forEach(link=>{
+ link.addEventListener("click",()=>{
+  document.getElementById("menu").classList.remove("open");
+ });
 });
 
-/* Reveal sections while scrolling */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
-  });
-}, { threshold:0.12 });
-
-document.querySelectorAll(".reveal")
-  .forEach(el => observer.observe(el));
-
-/* Floating blue particles */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-let particles = [];
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  particles = Array.from({length:45}, () => ({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    r:Math.random()*1.5+.3,
-    speed:Math.random()*.35+.1,
-    alpha:Math.random()*.5+.15
-  }));
+function filterPacks(category,button){
+ document.querySelectorAll("#packFilters button").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ document.querySelectorAll(".pack").forEach(pack=>{
+  pack.classList.toggle("hidden",
+   category!=="all" && pack.dataset.category!==category
+  );
+ });
 }
 
-function animateParticles() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  particles.forEach(p => {
-    p.y -= p.speed;
-    if (p.y < -5) {
-      p.y = canvas.height+5;
-      p.x = Math.random()*canvas.width;
-    }
-
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = `rgba(70,170,255,${p.alpha})`;
-    ctx.fill();
-  });
-
-  requestAnimationFrame(animateParticles);
+function playMovie(source,title){
+ const player=document.getElementById("moviePlayer");
+ const video=document.getElementById("video");
+ document.getElementById("movieTitle").textContent=title;
+ player.style.display="block";
+ video.pause();
+ video.src=source;
+ player.scrollIntoView({behavior:"smooth",block:"center"});
+ video.play().catch(()=>{
+  document.getElementById("movieTitle").textContent=
+   title+" — Add your authorized movie video file first.";
+ });
 }
-
-resizeCanvas();
-animateParticles();
-window.addEventListener("resize",resizeCanvas);
 </script>
 
 </body>
 </html>
-
