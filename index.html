@@ -1,385 +1,267 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROBIN.EDIT | Beyond The Frame</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROBIN.EDIT | Cinema Universe</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{
- background:#070811;
- color:white;
- font-family:Arial,sans-serif;
- overflow-x:hidden;
-}
-:root{
- --cyan:#78edff;
- --purple:#a58bff;
- --panel:#14182a;
-}
-nav{
- position:sticky;top:0;z-index:10;
- display:flex;justify-content:space-between;
- align-items:center;padding:18px 5%;
- background:#080914ed;
- backdrop-filter:blur(20px);
- border-bottom:1px solid #ffffff20;
-}
-.logo{
- font-size:23px;font-weight:1000;
- letter-spacing:3px;
-}
-.logo span{color:var(--cyan)}
-.navlinks{display:flex;gap:8px}
-button{
- cursor:pointer;color:white;
- border:1px solid #ffffff25;
- background:#ffffff0c;
- padding:11px 15px;border-radius:10px;
-}
-button:hover{
- border-color:var(--cyan);
- color:var(--cyan);
-}
-.hero{
- min-height:520px;padding:100px 7%;
- display:flex;align-items:center;
- background:
- radial-gradient(circle at 80% 30%,#6039a755,transparent 40%),
- linear-gradient(120deg,#080914,#10152b,#080914);
- position:relative;overflow:hidden;
-}
-.hero h1{
- font-size:clamp(55px,9vw,105px);
- line-height:.9;letter-spacing:-5px;
-}
-.hero h1 span{
- background:linear-gradient(90deg,#fff,var(--cyan),var(--purple));
- color:transparent;background-clip:text;
-}
-.hero p{
- color:#aebbd0;max-width:520px;
- line-height:1.8;margin-top:25px;
-}
-.primary{
- background:linear-gradient(90deg,var(--cyan),#b7caff);
- color:#07101a;border:0;font-weight:bold;
- padding:15px 22px;margin:25px 8px 0 0;
-}
-.quick{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:15px;padding:0 5%;margin-top:-25px;
- position:relative;
-}
-.quick div{
- background:linear-gradient(145deg,#1a2038,#101321);
- border:1px solid #ffffff20;
- border-radius:15px;padding:25px;
- cursor:pointer;transition:.3s;
-}
-.quick div:hover{
- transform:translateY(-8px);
- border-color:var(--cyan);
- box-shadow:0 10px 35px #78edff25;
-}
-.quick h3{margin:10px 0}
-.quick p{font-size:12px;color:#9ba4b9}
-main{padding:65px 5%}
-.page{display:none;animation:fade .4s}
-.page.active{display:block}
-@keyframes fade{
- from{opacity:0;transform:translateY(15px)}
- to{opacity:1;transform:translateY(0)}
-}
-.heading{
- font-size:35px;margin-bottom:25px;
-}
-.search{
- width:100%;padding:16px;
- background:#14182a;color:white;
- border:1px solid #ffffff25;
- border-radius:12px;font-size:16px;
- margin-bottom:20px;
-}
-.filters{display:flex;gap:10px;margin-bottom:25px}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
- gap:20px;
-}
-.card{cursor:pointer;transition:.3s}
+body{background:#070811;color:white;font-family:Arial,sans-serif}
+button{cursor:pointer}
+nav{position:sticky;top:0;z-index:10;background:#090b17ed;backdrop-filter:blur(15px);padding:17px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292d42}
+.logo{font-size:22px;font-weight:900;letter-spacing:3px}
+.logo span{color:#76eaff}
+nav button,.filter button{background:#171a2b;border:1px solid #34394e;color:white;padding:11px 13px;border-radius:25px;margin:2px}
+.hero{padding:85px 7%;background:radial-gradient(circle at 80% 20%,#533c9255,transparent 40%),linear-gradient(120deg,#101326,#070811)}
+.hero h1{font-size:clamp(48px,9vw,90px);line-height:.95}
+.hero h1 span{color:#78eaff}
+.hero p{color:#aab2c9;line-height:1.8;margin:20px 0;max-width:500px}
+.action{background:linear-gradient(90deg,#69e7ff,#a99aff);border:0;color:#080b17;padding:14px 22px;border-radius:9px;font-weight:bold}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;padding:0 5%;margin-top:-15px}
+.quick button{background:#15192b;border:1px solid #333950;color:white;padding:25px 10px;border-radius:14px;font-weight:bold}
+main{padding:45px 5%}
+.page{display:none}
+.page.active{display:block;animation:fade .4s}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+h2.heading{font-size:32px;margin-bottom:25px}
+.search{width:100%;padding:17px;background:#15192a;color:white;border:1px solid #34394e;border-radius:12px;font-size:16px;margin-bottom:18px}
+.filter{margin-bottom:23px}
+.filter button.active{border-color:#78eaff;color:#78eaff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:18px}
+.card{cursor:pointer;min-width:0;transition:.3s}
 .card:hover{transform:translateY(-7px)}
-.poster{
- height:245px;overflow:hidden;
- border-radius:12px;background:#151a2b;
- border:1px solid #ffffff20;
-}
-.poster img{
- width:100%;height:100%;object-fit:cover;
-}
-.card h4{margin-top:10px;font-size:14px}
-.card small{color:#9ba4b9}
-.back{margin-bottom:20px}
-.detail{
- display:grid;grid-template-columns:220px 1fr;
- gap:25px;background:#14182a;
- padding:20px;border-radius:15px;
-}
-.detail img{
- width:100%;border-radius:12px;
-}
-.detail h2{font-size:32px;margin-bottom:15px}
-.detail p{color:#b4bfd0;line-height:1.8}
-.servers{margin-top:20px;display:grid;gap:10px}
-.server{
- padding:15px;background:#20263c;
- border:1px solid #ffffff20;
- border-radius:10px;text-align:left;
-}
-.collab{
- background:linear-gradient(135deg,#171c32,#0a0d18);
- border:1px solid #ffffff20;
- border-radius:18px;padding:35px;
-}
-.collab h2{font-size:45px;margin:15px 0}
-.collab li{
- list-style:none;margin:18px 0;color:#d6dbea;
-}
-.collab li:before{content:"✦ ";color:var(--cyan)}
-.avatar{
- width:75px;height:75px;border-radius:50%;
- display:grid;place-items:center;
- background:linear-gradient(135deg,var(--cyan),var(--purple));
- color:#080914;font-weight:1000;font-size:22px;
-}
-.meter{height:9px;background:#ffffff20;border-radius:20px;margin:15px 0}
-.meter span{display:block;width:100%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:20px}
-footer{
- padding:30px 5%;border-top:1px solid #ffffff20;
- color:#929bad;font-size:12px;
-}
-@media(max-width:650px){
- nav{padding:14px 3%;flex-wrap:wrap;gap:10px}
- .logo{font-size:18px}
- .navlinks{gap:4px}
- button{padding:9px;font-size:11px}
- .hero{padding:80px 6%;min-height:440px}
- .quick{grid-template-columns:1fr}
- main{padding:45px 4%}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
- .poster{height:225px}
- .detail{grid-template-columns:105px 1fr;gap:13px;padding:12px}
- .detail h2{font-size:22px}
- .collab{padding:22px}
+.poster{height:235px;border-radius:12px;overflow:hidden;background:#171a2a}
+.poster img{width:100%;height:100%;object-fit:cover}
+.card h4{font-size:14px;margin-top:9px}
+.card small{color:#8e9bb5}
+.modal{position:fixed;inset:0;background:#000e;z-index:30;display:none;align-items:center;justify-content:center;padding:17px}
+.modal.show{display:flex}
+.modalbox{background:#15192b;border:1px solid #454b69;border-radius:17px;padding:23px;width:100%;max-width:540px;max-height:90vh;overflow:auto}
+.modalbox input{width:100%;padding:14px;margin:15px 0;background:#080b16;border:1px solid #454b69;color:white;border-radius:9px}
+.modalbox button{padding:12px;border-radius:8px;margin:4px}
+.close{background:#292d40;color:white;border:0}
+.player{width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;margin:15px 0}
+.player video,.player iframe{width:100%;height:100%;border:0}
+.note{color:#a9b4c9;font-size:13px;line-height:1.7;margin:12px 0}
+.panel{background:#15192b;padding:25px;border:1px solid #30374d;border-radius:15px}
+footer{padding:30px 5%;color:#8f99ad;border-top:1px solid #252a3c}
+@media(max-width:600px){
+nav{flex-wrap:wrap;gap:10px;padding:13px 3%}
+.logo{font-size:17px}
+nav button{font-size:10px;padding:9px}
+.quick{grid-template-columns:1fr}
+.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.poster{height:225px}
+.hero{padding:65px 6%}
 }
 </style>
 </head>
-
 <body>
 
 <nav>
  <div class="logo">ROBIN<span>.</span>EDIT</div>
- <div class="navlinks">
-  <button onclick="page('home')">HOME</button>
-  <button onclick="page('movies')">MOVIES</button>
-  <button onclick="page('scenes')">SCENES</button>
-  <button onclick="page('collab')">COLLAB</button>
+ <div>
+  <button onclick="showPage('home')">HOME</button>
+  <button onclick="showPage('movies')">MOVIES</button>
+  <button onclick="showPage('scenes')">SCENES</button>
+  <button onclick="showPage('collab')">COLLAB</button>
  </div>
 </nav>
 
 <header class="hero" id="hero">
- <div>
-  <small style="color:#78edff;letter-spacing:5px">THE ART OF CINEMA</small>
-  <h1>BEYOND<br><span>THE FRAME.</span></h1>
-  <p>Discover cinema, explore editing resources and create something extraordinary with ROBIN.EDIT.</p>
-  <button class="primary" onclick="page('movies')">EXPLORE MOVIES ↗</button>
-  <button onclick="page('scenes')">SCENE PACKS</button>
- </div>
+ <h1>ENTER THE<br><span>CINEMA.</span></h1>
+ <p>Explore your favourite movies, discover cinematic scenes and experience the world of ROBIN.EDIT.</p>
+ <button class="action" onclick="showPage('movies')">EXPLORE LIBRARY ↗</button>
 </header>
 
 <section class="quick" id="quick">
- <div onclick="page('scenes')">
-  <h2>▣</h2><h3>SCENE PACKS</h3>
-  <p>Explore cinematic editing resources.</p>
- </div>
- <div onclick="page('movies')">
-  <h2>▶</h2><h3>MOVIE LIBRARY</h3>
-  <p>Discover movies and series.</p>
- </div>
- <div onclick="page('collab')">
-  <h2>✦</h2><h3>COLLABORATE</h3>
-  <p>Work with ROBIN.EDIT.</p>
- </div>
+ <button onclick="showPage('movies')">🎬<br><br>MOVIE LIBRARY</button>
+ <button onclick="showPage('scenes')">✦<br><br>SCENE PACKS</button>
+ <button onclick="showPage('collab')">⚡<br><br>COLLABORATE</button>
 </section>
 
 <main>
 
 <section class="page active" id="home">
  <h2 class="heading">WELCOME TO ROBIN.EDIT</h2>
- <div style="background:#14182a;padding:30px;border-radius:15px">
-  <div class="avatar">RE</div>
-  <h2 style="margin:15px 0">ROBIN.EDIT</h2>
-  <p style="color:#aebbd0">Cinematic Video Editor | Creative Artist</p>
-  <h3 style="margin-top:25px">Editing Quality Target — 100%</h3>
-  <div class="meter"><span></span></div>
-  <p style="color:#aebbd0">HD EDITING • ORIGINAL CONTENT • CINEMATIC STYLE</p>
+ <div class="panel">
+  <h1 style="color:#78eaff;font-size:40px">RE.</h1>
+  <h2 style="margin:15px 0">BEYOND THE FRAME.</h2>
+  <p class="note">Cinematic editing • Creative vision • Original content</p>
+  <button class="action" onclick="showPage('movies')">DISCOVER MOVIES</button>
  </div>
 </section>
 
 <section class="page" id="movies">
- <h2 class="heading">MOVIE LIBRARY</h2>
- <input class="search" id="search" placeholder="Search all movies and series..." oninput="searchMovies()">
- <div class="filters">
-  <button onclick="setType('all')">ALL</button>
-  <button onclick="setType('movie')">MOVIES</button>
-  <button onclick="setType('tv')">SERIES</button>
+ <h2 class="heading">MOVIE UNIVERSE</h2>
+ <input class="search" id="search" placeholder="Search any movie..." oninput="renderMovies()">
+ <div class="filter">
+  <button class="active" onclick="setFilter('all',this)">ALL</button>
+  <button onclick="setFilter('movie',this)">MOVIES</button>
+  <button onclick="setFilter('series',this)">SERIES</button>
  </div>
  <div class="grid" id="movieGrid"></div>
- <button class="primary" onclick="moreMovies()">LOAD MORE</button>
-</section>
-
-<section class="page" id="detail">
- <button class="back" onclick="page('movies')">← BACK</button>
- <div class="detail">
-  <img id="dPoster" src="" alt="Poster">
-  <div>
-   <h2 id="dTitle"></h2>
-   <p id="dOverview"></p>
-   <div class="servers" id="servers"></div>
-  </div>
- </div>
 </section>
 
 <section class="page" id="scenes">
  <h2 class="heading">SCENE PACK VAULT</h2>
- <p style="color:#9ba4b9;margin-bottom:25px">
-  Your cinematic scene packs and authorized editing clips.
- </p>
- <div class="grid" id="sceneGrid">
-  <p>No scene packs added yet.</p>
+ <div class="panel">
+  <h2>YOUR EDITING WORLD</h2>
+  <p class="note">Add your own original or licensed HD scene packs here.</p>
+  <div id="sceneList"></div>
+  <input id="sceneName" class="search" placeholder="Scene pack name">
+  <input id="sceneUrl" class="search" placeholder="Authorized clip URL">
+  <button class="action" onclick="addScene()">ADD SCENE PACK</button>
  </div>
 </section>
 
 <section class="page" id="collab">
- <div class="collab">
-  <small style="color:#78edff;letter-spacing:4px">LET'S CREATE TOGETHER</small>
-  <h2>COLLAB WITH<br>ROBIN.</h2>
-  <ul>
-   <li>You must follow my social media profile.</li>
-   <li>You must have more than 1,000 followers.</li>
-   <li>Your videos must be properly edited and presented.</li>
-   <li>Your content must be original, not copied.</li>
-   <li>Your videos must be in HD quality.</li>
-  </ul>
-  <p style="color:#78edff">Views are not required. Quality and originality matter most.</p>
-  <a href="https://ig.me/m/robinsolace">
-   <button class="primary">MESSAGE ROBIN ↗</button>
-  </a>
+ <div class="panel">
+  <h2 style="font-size:36px">LET'S COLLAB.</h2>
+  <p class="note">Collaboration requirements:</p>
+  <p class="note">✦ Follow my social media profile.<br>
+  ✦ More than 1,000 followers.<br>
+  ✦ Properly edited videos.<br>
+  ✦ Original content, not copied.<br>
+  ✦ HD quality videos.</p>
+  <p class="note">Views are not required. Quality and originality matter most.</p>
+  <a href="https://ig.me/m/robinsolace"><button class="action">MESSAGE ROBIN ↗</button></a>
  </div>
 </section>
 
 </main>
 
-<footer>
- © 2026 ROBIN.EDIT — BEYOND THE FRAME.
-</footer>
+<footer>© 2026 ROBIN.EDIT | ALL RIGHTS RESERVED</footer>
+
+<div class="modal" id="movieModal">
+ <div class="modalbox">
+  <button class="close" onclick="closeModal()">✕ CLOSE</button>
+  <h2 id="modalTitle" style="margin-top:20px">MOVIE</h2>
+  <p class="note">Enter the authorized video URL for this movie.</p>
+  <input id="movieUrl" placeholder="Paste movie video URL here">
+  <button class="action" onclick="playMovie()">▶ PLAY MOVIE</button>
+  <div class="player" id="player" style="display:none"></div>
+  <p class="note">Supported: direct MP4 video links and authorized video embed links.</p>
+ </div>
+</div>
 
 <script>
-let API_KEY = "";
-let type = "all";
-let currentPage = 1;
-let selected = null;
+const movies=[
+["Inception","movie","/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg"],
+["Interstellar","movie","/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"],
+["Avengers: Endgame","movie","/or06FN3Dka5tukK1e9sl16pB3iy.jpg"],
+["Spider-Man: No Way Home","movie","/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"],
+["Joker","movie","/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"],
+["Dune","movie","/d5NXSklXo0qyIYkgV94XAgMIckC.jpg"],
+["The Batman","movie","/74xTEgt7R36Fpooo50r9T25onhq.jpg"],
+["Doctor Strange","movie","/uGBVj3bEbCoZbDjjl9wTxcygko1.jpg"],
+["Iron Man","movie","/78lPtwv72eTNqFW9COBYI0dWDJa.jpg"],
+["Titanic","movie","/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg"],
+["Stranger Things","series","/49WJfeN0moxb9IPfGn8AIqMGskD.jpg"],
+["Wednesday","series","/9PFonBhy4cQy7Jz20NpMygczOkv.jpg"],
+["Money Heist","series","/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg"],
+["Breaking Bad","series","/ggFHVNu6YYI5L9pCfOacjizRGt.jpg"],
+["The Witcher","series","/cZ0d3rtvXPVvuiX22sP79K3Hmjz.jpg"],
+["Loki","series","/voHUmluYmKyleFkTu3lOXQG702u.jpg"]
+];
 
-function page(id){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+let filter="all";
+let selected=null;
+
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  document.getElementById(id).classList.add("active");
- document.getElementById("hero").style.display=id==="home"?"flex":"none";
+ document.getElementById("hero").style.display=id==="home"?"block":"none";
  document.getElementById("quick").style.display=id==="home"?"grid":"none";
  window.scrollTo(0,0);
 }
 
-function setType(t){
- type=t;
- currentPage=1;
- loadMovies();
+function setFilter(f,b){
+ filter=f;
+ document.querySelectorAll(".filter button").forEach(x=>x.classList.remove("active"));
+ b.classList.add("active");
+ renderMovies();
 }
 
-async function tmdb(url){
- const r=await fetch(url+"&api_key="+API_KEY);
- if(!r.ok)throw new Error("API error");
- return r.json();
+function renderMovies(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let list=movies.filter(m=>
+ (filter==="all"||m[1]===filter)&&m[0].toLowerCase().includes(q)
+ );
+ let grid=document.getElementById("movieGrid");
+ grid.innerHTML="";
+ list.forEach(m=>{
+  let card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
+   <div class="poster">
+    <img loading="lazy" src="https://image.tmdb.org/t/p/w500${m[2]}" alt="">
+   </div>
+   <h4></h4><small></small>`;
+  card.querySelector("h4").textContent=m[0];
+  card.querySelector("small").textContent=m[1].toUpperCase();
+  card.onclick=()=>openMovie(m);
+  grid.appendChild(card);
+ });
+ if(!list.length)grid.innerHTML="<p>No titles found.</p>";
 }
 
-async function loadMovies(){
- if(!API_KEY){
- document.getElementById("movieGrid").innerHTML=
- "<p>TMDB API key required to load posters.</p>";
- return;
- }
-
- let q=document.getElementById("search").value.trim();
- let url=q?
- `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(q)}&page=${currentPage}`:
- type==="tv"?
- `https://api.themoviedb.org/3/tv/popular?page=${currentPage}`:
- type==="movie"?
- `https://api.themoviedb.org/3/movie/popular?page=${currentPage}`:
- `https://api.themoviedb.org/3/trending/all/week?page=${currentPage}`;
-
- try{
-  let data=await tmdb(url);
-  let grid=document.getElementById("movieGrid");
-  if(currentPage===1)grid.innerHTML="";
-
-  data.results.forEach(m=>{
-   if(m.media_type==="person")return;
-   let t=m.media_type||(m.title?"movie":"tv");
-   if(type!=="all"&&t!==type)return;
-
-   let title=m.title||m.name;
-   let poster=m.poster_path?
-   "https://image.tmdb.org/t/p/w500"+m.poster_path:"";
-
-   let card=document.createElement("div");
-   card.className="card";
-   card.innerHTML=`
-    <div class="poster"><img src="${poster}" alt=""></div>
-    <h4></h4><small>${t.toUpperCase()}</small>
-   `;
-   card.querySelector("h4").textContent=title;
-   card.onclick=()=>openMovie(m,t);
-   grid.appendChild(card);
-  });
- }catch(e){
-  alert("API key check karo aur internet connection dekho.");
- }
-}
-
-function searchMovies(){
- clearTimeout(window.searchTimer);
- window.searchTimer=setTimeout(()=>{
-  currentPage=1;
-  loadMovies();
- },500);
-}
-
-function moreMovies(){
- currentPage++;
- loadMovies();
-}
-
-function openMovie(m,t){
+function openMovie(m){
  selected=m;
- document.getElementById("dTitle").textContent=m.title||m.name;
- document.getElementById("dPoster").src=
- "https://image.tmdb.org/t/p/w500"+m.poster_path;
- document.getElementById("dOverview").textContent=m.overview||"";
- document.getElementById("servers").innerHTML=
- "<p>No authorized video link added for this title.</p>";
- page("detail");
+ document.getElementById("modalTitle").textContent=m[0];
+ document.getElementById("movieUrl").value="";
+ document.getElementById("player").style.display="none";
+ document.getElementById("player").innerHTML="";
+ document.getElementById("movieModal").classList.add("show");
 }
 
+function closeModal(){
+ document.getElementById("movieModal").classList.remove("show");
+ document.getElementById("player").innerHTML="";
+}
+
+function playMovie(){
+ let url=document.getElementById("movieUrl").value.trim();
+ if(!url){alert("Please paste a video URL.");return;}
+ try{
+  let parsed=new URL(url);
+  if(!["https:","http:"].includes(parsed.protocol))throw 0;
+  let player=document.getElementById("player");
+  player.style.display="block";
+  player.innerHTML="";
+  if(/\.(mp4|webm|ogg)(\?.*)?$/i.test(parsed.pathname)){
+   let video=document.createElement("video");
+   video.src=parsed.href;
+   video.controls=true;
+   video.autoplay=true;
+   video.playsInline=true;
+   player.appendChild(video);
+   video.play().catch(()=>{});
+  }else{
+   let iframe=document.createElement("iframe");
+   iframe.src=parsed.href;
+   iframe.allow="autoplay; fullscreen; picture-in-picture";
+   iframe.allowFullscreen=true;
+   player.appendChild(iframe);
+  }
+ }catch(e){alert("Please enter a valid HTTP or HTTPS video URL.");}
+}
+
+function addScene(){
+ let name=document.getElementById("sceneName").value.trim();
+ let url=document.getElementById("sceneUrl").value.trim();
+ if(!name||!url){alert("Enter both name and URL.");return;}
+ try{new URL(url)}catch(e){alert("Enter a valid URL.");return;}
+ let a=document.createElement("a");
+ a.href=url;a.target="_blank";a.rel="noopener";
+ a.textContent="▶ "+name;
+ a.style="display:block;padding:15px;color:#78eaff;border-bottom:1px solid #34394e";
+ document.getElementById("sceneList").appendChild(a);
+ document.getElementById("sceneName").value="";
+ document.getElementById("sceneUrl").value="";
+}
+renderMovies();
 </script>
 </body>
 </html>
